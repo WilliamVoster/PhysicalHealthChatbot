@@ -1,0 +1,5 @@
+fastapi
+weaviate-client
+neo4j
+python-dotenv
+uvicorn

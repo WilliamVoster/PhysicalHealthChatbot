@@ -1,0 +1,68 @@
+
+
+services:
+  weaviate:
+    container_name: weaviate_container
+    command:
+    - --host
+    - 0.0.0.0
+    - --port
+    - '8080'
+    - --scheme
+    - http                                                # as opposed to HTTPS
+    image: cr.weaviate.io/semitechnologies/weaviate:1.29.0
+    ports:
+      - "8080:8080"                                       # For REST API
+      - "50051:50051"                                     # For gRPC API
+    volumes:
+      - weaviate_data:/var/lib/weaviate                   # Named volume @ /var/lib/weaviate
+    restart: on-failure:0                                 # Try restart once on failed start
+    environment:
+      QUERY_DEFAULTS_LIMIT: 25                            # num results fetched per query
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'     # no auth
+      PERSISTENCE_DATA_PATH: '/var/lib/weaviate'          # data location
+      ENABLE_API_BASED_MODULES: 'true'                    # allow API access
+      ENABLE_MODULES: 'text2vec-ollama,generative-ollama'
+      CLUSTER_HOSTNAME: 'node1'                           # cluster name
+
+  # neo4j:
+  #   image: neo4j:latest
+  #   environment:
+  #     NEO4J_AUTH: neo4j/password
+  #   ports:
+  #     - "7474:7474"  # Web interface
+  #     - "7687:7687"  # Bolt protocol for queries
+  #   volumes:
+  #     - neo4j_data:/data
+
+  ollama:
+    container_name: ollama_container
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama  # Mount pre-downloaded models
+
+  api:
+    container_name: api_container
+    depends_on:
+      - weaviate
+    build:
+      context: .
+      dockerfile: api.dockerfile
+    working_dir: /app
+    volumes:
+      - ./api:/app
+    ports:
+      - "8000:8000"
+    restart: on-failure:0
+    environment:
+      WEAVIATE_URL: http://weaviate:8080
+      # NEO4J_URL: bolt://neo4j:7687
+      # NEO4J_USER: neo4j
+      # NEO4J_PASSWORD: password
+
+volumes:
+  weaviate_data:
+  # neo4j_data:
+  ollama_data:
