@@ -2,7 +2,7 @@
 
 
 import weaviate
-from weaviate.classes.config import Configure, Property, DataType
+from weaviate.classes.config import Configure, Property, DataType, VectorDistances
 from fastapi import FastAPI
 # from neo4j import GraphDatabase
 
@@ -36,36 +36,68 @@ async def root():
 #         result = session.run("MATCH (n) RETURN n LIMIT 1")
 #         return [record["n"] for record in result]
 
-@app.get("/set_test")
-async def set_test():
+@app.get("/create_object")
+async def create_object():
 
-    client.collections.create(
-        "Article",
-        properties=[]
-    )
+    symptoms = client.collections.get("Symptoms")
+
+    uuid = symptoms.data.insert({
+        "entity": "right ankle",
+        "problem": "broken",
+        "location": [7.0, 15.0]
+    })
+
+    print("object's id: ", uuid)
 
 
 @app.get("/create_collection")
 async def create_collection():
 
-    client.collections.delete("Question")
-    
-    questions = client.collections.create(
+    # client.collections.delete("Question")
+    # questions = client.collections.create(
 
-        name="Question",
+    #     name="Question",
 
-        vectorizer_config = Configure.Vectorizer.text2vec_ollama(   # embedding integration
-            api_endpoint="http://host.docker.internal:11434",       # Allow Weaviate from within a Docker container to contact your Ollama instance
+    #     vectorizer_config = Configure.Vectorizer.text2vec_ollama(   # embedding integration
+    #         api_endpoint="http://host.docker.internal:11434",       # Allow Weaviate from within a Docker container to contact your Ollama instance
+    #         model="nomic-embed-text",
+    #     ),
+
+    #     generative_config = Configure.Generative.ollama(            # generative integration
+    #         api_endpoint="http://host.docker.internal:11434",       # Allow Weaviate from within a Docker container to contact your Ollama instance
+    #         model="llama3.2",
+    #     )
+    # )
+
+    client.collections.delete("Symptoms")
+    symptoms = client.collections.create(
+        "Symptoms",
+        vectorizer_config=Configure.Vectorizer.text2vec_ollama(   
+            api_endpoint="http://host.docker.internal:11434",    
             model="nomic-embed-text",
         ),
-
-        generative_config = Configure.Generative.ollama(            # generative integration
-            api_endpoint="http://host.docker.internal:11434",       # Allow Weaviate from within a Docker container to contact your Ollama instance
-            model="llama3.2",
-        )
+        vector_index_config=Configure.VectorIndex.hnsw(                 # Hierarchical Navigable Small World
+            distance_metric=VectorDistances.COSINE                      # Default, and good for NLP
+        ),
+        reranker_config=Configure.Reranker.cohere(),                    # Reranker improves ordering of results
+        properties=[
+            Property(name="entity", data_type=DataType.TEXT),
+            Property(name="problem", data_type=DataType.TEXT),
+            Property(name="location", data_type=DataType.NUMBER_ARRAY),
+            Property(name="date", data_type=DataType.DATE),
+        ]
     )
-    print("response", questions)
 
+
+    print("response", symptoms)
+
+
+@app.get("/get_all")
+async def get_all():
+    symptoms = client.collections.get("Symptoms")
+    
+    for item in symptoms.iterator():
+        print(item.uuid, item.properties)
 
 @app.get("/get_vector")
 async def get_vector():
@@ -91,11 +123,6 @@ async def get_vector():
     # )
 
     return result["data"]["Get"]["Article"]
-
-
-
-# print("Closing...")
-# client.close()
 
 
 
