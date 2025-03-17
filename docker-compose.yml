@@ -62,6 +62,17 @@ services:
       # NEO4J_USER: neo4j
       # NEO4J_PASSWORD: password
 
+  frontend:
+    container_name: frontend_container
+    build:
+      context: .
+      dockerfile: frontend.dockerfile
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api
+    develop: {}
+
 volumes:
   weaviate_data:
   # neo4j_data:
