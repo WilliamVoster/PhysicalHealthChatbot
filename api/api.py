@@ -5,6 +5,7 @@ import weaviate
 from weaviate.classes.config import Configure, Property, DataType, VectorDistances
 from fastapi import FastAPI
 # from neo4j import GraphDatabase
+from langchain_ollama import OllamaEmbeddings
 
 app = FastAPI()
 
@@ -27,8 +28,13 @@ client = weaviate.connect_to_custom(
 
 @app.get("/")
 async def root():
-    return {"message": "Hello, person!"}
-
+    ollama_embedder = OllamaEmbeddings(
+        base_url="http://ollama:11434", 
+        model="llama3.2:latest"
+    )
+    prompt = "Please tell me a joke about the sun."
+    response = ollama_embedder.embed_query(prompt)
+    return {"message": f"Embedding:{response}"}
 
 # @app.get("/graph")
 # async def get_graph():
@@ -48,20 +54,11 @@ async def create_object():
     })
 
     print("object's id: ", uuid)
+    return {"message": f"object's id: {uuid}"}
 
 
 @app.get("/create_collection")
 async def create_collection():
-
-    # client.collections.delete("Question")
-    # questions = client.collections.create(
-
-    #     name="Question",
-
-    #     vectorizer_config = Configure.Vectorizer.text2vec_ollama(   # embedding integration
-    #         api_endpoint="http://host.docker.internal:11434",       # Allow Weaviate from within a Docker container to contact your Ollama instance
-    #         model="nomic-embed-text",
-    #     ),
 
     #     generative_config = Configure.Generative.ollama(            # generative integration
     #         api_endpoint="http://host.docker.internal:11434",       # Allow Weaviate from within a Docker container to contact your Ollama instance
@@ -88,16 +85,21 @@ async def create_collection():
         ]
     )
 
-
     print("response", symptoms)
+    return {"message": f"created collection: {symptoms}"}
 
 
 @app.get("/get_all")
 async def get_all():
+
     symptoms = client.collections.get("Symptoms")
-    
+    return_text = ""
+
     for item in symptoms.iterator():
-        print(item.uuid, item.properties)
+        return_text = return_text + str(item.uuid) + " --> " + str(item.properties)
+
+
+    return {"message": f"{return_text}"}
 
 @app.get("/get_vector")
 async def get_vector():
@@ -123,12 +125,6 @@ async def get_vector():
     # )
 
     return result["data"]["Get"]["Article"]
-
-
-
-
-
-
 
 
 
