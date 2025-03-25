@@ -3,7 +3,8 @@
 
 import weaviate
 from weaviate.classes.config import Configure, Property, DataType, VectorDistances
-from fastapi import FastAPI
+from weaviate.classes.query import MetadataQuery
+from fastapi import FastAPI, Query
 from fastapi import Request
 # from neo4j import GraphDatabase
 from langchain_ollama import OllamaEmbeddings
@@ -142,33 +143,21 @@ async def get_all():
 
     return {"message": f"{return_text}"}
 
-@app.get("/get_vector")
-async def get_vector():
 
-    # result = client.query.get("Article", ["title"]).with_limit(1).do()
+@app.get("/get_near")
+async def get_near(term: str = Query(..., description="Search term for Weaviate")):
 
-    result = client.collections.get("Article").query.near_text(
-        query="example",
-        limit=1,
-        return_properties=["title"]
+    symptoms = client.collections.get("Symptoms")
+    response = symptoms.query.near_text(
+        query=term,
+        limit=10,
+        return_metadata=MetadataQuery(distance=True),
+        # return_properties=["title"]
     )
 
-    # result = client.collections.get("Article").query.bm25(        # keyword-based search
-    #     query="example",
-    #     limit=1,
-    #     return_properties=["title"]
-    # )
+    return {"response": response}
 
-    # result = client.collections.get("Article").query.hybrid(      # vector and keyword search
-    #     query="example",
-    #     limit=1,
-    #     return_properties=["title"]
-    # )
-
-    return result["data"]["Get"]["Article"]
-
-
-
+ 
 
 
 
