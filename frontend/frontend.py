@@ -24,19 +24,29 @@ def chat_show():
 
 def chat_input():
 
+    if "user_input" not in st.session_state:
+        st.session_state.user_input = ""
+        st.session_state.user_input_internal = ""
+
+    def clear_input():
+        st.session_state.user_input_internal = st.session_state.user_input
+        st.session_state.user_input = ""
+        
+
     with st.form(key="input_form"):
         col1, col2 = st.columns([5, 1])
 
         with col1:
-            user_input = st.text_input(label="Type query here:")
+            user_input = st.text_input(label="Type query here:", key="user_input")
 
         with col2:
-            submit_button = st.form_submit_button(label="Submit")
+            submit_button = st.form_submit_button(label="Submit", on_click=clear_input)
 
     if submit_button:
-        # st.write(f"You entered: {user_input}")
+        # st.write(f"input: {st.session_state.user_input}")
+        # st.write(f"internal: {st.session_state.user_input_internal}")
 
-        data = {"query": user_input, "history": st.session_state["responses"]}
+        data = {"query": st.session_state.user_input_internal, "history": st.session_state["responses"]}
 
         response = requests.post("http://api:8000/api/query", json=data)
         
@@ -86,6 +96,7 @@ chat_show()
 chat_input()
 
 if st.button("update"):
+    # st.session_state.user_input = ""
     pass
 
 
