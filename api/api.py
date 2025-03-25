@@ -4,8 +4,11 @@
 import weaviate
 from weaviate.classes.config import Configure, Property, DataType, VectorDistances
 from fastapi import FastAPI
+from fastapi import Request
 # from neo4j import GraphDatabase
 from langchain_ollama import OllamaEmbeddings
+from langchain_ollama.chat_models import ChatOllama
+from langchain.schema import HumanMessage, SystemMessage, AIMessage
 
 app = FastAPI()
 
@@ -28,19 +31,57 @@ client = weaviate.connect_to_custom(
 
 @app.get("/")
 async def root():
-    ollama_embedder = OllamaEmbeddings(
-        base_url="http://ollama:11434", 
-        model="llama3.2:latest"
-    )
-    prompt = "Please tell me a joke about the sun."
-    response = ollama_embedder.embed_query(prompt)
-    return {"message": f"Embedding:{response}"}
+    return {"API is running."}
+    # ollama_embedder = OllamaEmbeddings(
+    #     base_url="http://ollama:11434", 
+    #     model="llama3.2:latest"
+    # )
+    # prompt = "Please tell me a joke about the sun."
+    # response = ollama_embedder.embed_query(prompt)
+    # return {"message": f"Embedding:{response}"}
 
 # @app.get("/graph")
 # async def get_graph():
 #     with neo4j_driver.session() as session:
 #         result = session.run("MATCH (n) RETURN n LIMIT 1")
 #         return [record["n"] for record in result]
+
+
+@app.post("/api/query")
+async def query(request: Request):
+
+    data = await request.json()
+    history = []
+
+    chat = ChatOllama(
+        base_url="http://ollama:11434", 
+        model="llama3.2:latest"
+    )
+
+    for role, content in data["history"]:
+        print(role)
+        print(content)
+
+        if role == "USER":
+            history.append(HumanMessage(content=content))
+
+        elif role == "AI":
+            history.append(AIMessage(content=content))
+
+        elif role == "SYSTEM":
+            history.append(SystemMessage(content=content))
+
+    prompt = data["query"]
+
+    history.append(HumanMessage(content=prompt))
+    data["history"].append(["USER", prompt])
+
+    response = chat(history)
+
+    data["history"].append(["AI", response.content])
+
+    return {"response": response.content, "history": data["history"]}
+
 
 @app.get("/create_object")
 async def create_object():
@@ -76,7 +117,7 @@ async def create_collection():
         vector_index_config=Configure.VectorIndex.hnsw(                 # Hierarchical Navigable Small World
             distance_metric=VectorDistances.COSINE                      # Default, and good for NLP
         ),
-        reranker_config=Configure.Reranker.cohere(),                    # Reranker improves ordering of results
+        # reranker_config=Configure.Reranker.cohere(),                    # Reranker improves ordering of results. SENDS ONLINE API CALLS! 
         properties=[
             Property(name="entity", data_type=DataType.TEXT),
             Property(name="problem", data_type=DataType.TEXT),
