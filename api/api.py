@@ -131,6 +131,43 @@ async def create_collection():
     return {"message": f"created collection: {symptoms}"}
 
 
+@app.post("/api/create_object")
+async def create_object(request: Request):
+
+    data = await request.json()
+
+    collection = client.collections.get(data["Collection"])
+
+    uuid = collection.data.insert(data["Object"])
+
+    print("object's id: ", uuid)
+    return {"message": f"object's id: {uuid}"}
+
+
+@app.post("/api/delete_object")
+async def delete_object(request: Request):
+
+    data = await request.json()
+
+    collection = client.collections.get(data["Collection"])
+
+    uuid = data["uuid"]
+
+    try:
+        collection.data.delete_by_id(uuid)
+
+        return {"message": f"Object deleted with id: {uuid}"}
+    
+    except weaviate.exceptions.UnexpectedStatusCodeError as e:
+
+        return {
+            "message": f"Could not delete object with id: {uuid} in collection: {collection}", 
+            "error": e.message,
+            "status_code": e.status_code}
+        
+
+    
+
 @app.get("/get_all")
 async def get_all():
 
