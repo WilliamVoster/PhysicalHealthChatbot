@@ -24,6 +24,7 @@ services:
       ENABLE_API_BASED_MODULES: 'true'                    # allow API access
       ENABLE_MODULES: 'text2vec-ollama,generative-ollama'
       CLUSTER_HOSTNAME: 'node1'                           # cluster name
+      LOG_LEVEL: debug
 
   # neo4j:
   #   image: neo4j:latest
