@@ -7,7 +7,6 @@ import requests
 def chat_show():
     
     if "responses" not in st.session_state:
-        # st.write("responses was empty")
         st.session_state["responses"] = []
     
     num_responses = len(st.session_state["responses"])
@@ -46,9 +45,13 @@ def chat_input():
         # st.write(f"input: {st.session_state.user_input}")
         # st.write(f"internal: {st.session_state.user_input_internal}")
 
-        data = {"query": st.session_state.user_input_internal, "history": st.session_state["responses"]}
+        data = {
+            "query": st.session_state.user_input_internal, 
+            "history": st.session_state["responses"]
+        }
 
-        response = requests.post("http://api:8000/api/query", json=data)
+        # response = requests.post("http://api:8000/api/query", json=data)
+        response = requests.post("http://api:8000/api/query_with_context", json=data)
         
         response_data = response.json()
 
@@ -56,6 +59,31 @@ def chat_input():
         st.session_state["responses"] = response_data["history"]
 
         chat_show()
+
+
+def items_show():
+    
+
+    fetch_response = requests.get("http://api:8000/get_all")
+    fetch_response_data = fetch_response.json()
+
+    st.write(fetch_response_data)
+
+
+    for item in fetch_response_data["message"]:
+        st.subheader(f"item: {item['uuid']}")
+        st.text(f"Properties: {item['properties']}")
+
+        if st.button(f"Delete {item['uuid']}", key=f"delete_id_{item['uuid']}"):
+
+            data = {"Collection": "Symptoms", "uuid": item['uuid']}
+
+            delete_response = requests.post("http://api:8000/api/delete_object", json=data)
+            delete_response_data = delete_response.json()
+
+            st.write(delete_response_data)
+            
+
 
 
 
@@ -94,6 +122,8 @@ chat_field = st.empty()
 chat_show()
 
 chat_input()
+
+items_show()
 
 if st.button("update"):
     # st.session_state.user_input = ""
