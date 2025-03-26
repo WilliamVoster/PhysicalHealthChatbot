@@ -3,7 +3,7 @@
 
 import weaviate
 from weaviate.classes.config import Configure, Property, DataType, VectorDistances
-from weaviate.classes.query import MetadataQuery
+from weaviate.classes.query import MetadataQuery, Sort
 from fastapi import FastAPI, Query
 from fastapi import Request
 # from neo4j import GraphDatabase
@@ -32,7 +32,27 @@ client = weaviate.connect_to_custom(
 
 @app.get("/")
 async def root():
-    return {"API is running."}
+
+    return_text = []
+
+    return_text.append("API is running")
+
+    vector_db_schema = "vector db schema:"
+    collections = client.collections.list_all()
+
+    return collections
+
+    for col_name in collections:
+
+        # vector_db_schema += f"\n{collections[col_name]}"
+        vector_db_schema += f"\n{collections[col_name].properties}"
+        vector_db_schema += f"\n{collections[col_name].vectorizer}"
+        vector_db_schema += f"\n{collections[col_name].vectorizer_config}"
+
+    return_text.append(vector_db_schema)
+
+    return "\n".join(return_text)
+
     # ollama_embedder = OllamaEmbeddings(
     #     base_url="http://ollama:11434", 
     #     model="llama3.2:latest"
@@ -48,10 +68,8 @@ async def root():
 #         return [record["n"] for record in result]
 
 
-@app.post("/api/query")
-async def query(request: Request):
+async def process_llm_query(data):
 
-    data = await request.json()
     history = []
 
     chat = ChatOllama(
@@ -82,6 +100,36 @@ async def query(request: Request):
     data["history"].append(["AI", response.content])
 
     return {"response": response.content, "history": data["history"]}
+
+
+@app.post("/api/query")
+async def query(request: Request):
+
+    data = await request.json()
+    
+    return await process_llm_query(data)
+
+
+@app.post("/api/query_with_context")
+async def query_with_context(request: Request):
+
+    data = await request.json()
+
+    search_term = data["query"]
+
+    db_response = await process_db_query(search_term, "Symptoms")
+
+    context_builder = []
+    for o in db_response.objects:
+
+        context_builder.append(f"{o.properties['entity']} is {o.properties['problem']}")
+    
+    context = "\n".join(context_builder)
+
+    data["query"] = f"Context: \n{context} \n\n Query: {search_term}"
+
+    return await process_llm_query(data)
+
 
 
 @app.get("/create_object")
@@ -161,7 +209,7 @@ async def delete_object(request: Request):
     except weaviate.exceptions.UnexpectedStatusCodeError as e:
 
         return {
-            "message": f"Could not delete object with id: {uuid} in collection: {collection}", 
+            "message": f"Could not delete object with id: {uuid} in collection: {collection['name']}", 
             "error": e.message,
             "status_code": e.status_code}
         
@@ -172,25 +220,44 @@ async def delete_object(request: Request):
 async def get_all():
 
     symptoms = client.collections.get("Symptoms")
-    return_text = ""
+    return_data = []
 
     for item in symptoms.iterator():
-        return_text = return_text + str(item.uuid) + " --> " + str(item.properties)
+        return_data.append({"uuid": item.uuid, "properties": item.properties})
+
+    return {"message": return_data}
 
 
-    return {"message": f"{return_text}"}
+async def process_db_query(term: str, collection_name: str):
+
+    collection = client.collections.get(collection_name)
+
+    response = collection.query.near_text(
+        query=term,
+        limit=10,
+        return_metadata=MetadataQuery(distance=True, creation_time=True, last_update_time=True),
+        return_properties=["entity", "problem", "date", "location"],
+        include_vector=True
+    )
+
+    # Use autocut 1, 2 or 3
+    # only return objects with continual dinstance, e.g. if there is a break in continuity
+
+    
+    # Search automatically sorts by distance
+    # sort=Sort.by_property(
+    #         name="_distance", ascending=True
+    #     ).by_property(
+    #         name="_creationTimeUnix", ascending=False
+    #     ),
+
+    return response
 
 
 @app.get("/get_near")
 async def get_near(term: str = Query(..., description="Search term for Weaviate")):
 
-    symptoms = client.collections.get("Symptoms")
-    response = symptoms.query.near_text(
-        query=term,
-        limit=10,
-        return_metadata=MetadataQuery(distance=True),
-        # return_properties=["title"]
-    )
+    response = await process_db_query(term, "Symptoms")
 
     return {"response": response}
 
