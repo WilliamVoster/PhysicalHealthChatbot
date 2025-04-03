@@ -24,7 +24,7 @@ services:
       ENABLE_API_BASED_MODULES: 'true'                    # allow API access
       ENABLE_MODULES: 'text2vec-ollama,generative-ollama'
       CLUSTER_HOSTNAME: 'node1'                           # cluster name
-      LOG_LEVEL: debug
+      # LOG_LEVEL: debug
 
   # neo4j:
   #   image: neo4j:latest
@@ -51,6 +51,7 @@ services:
     build:
       context: .
       dockerfile: api.dockerfile
+    image: 060795916183.dkr.ecr.eu-central-1.amazonaws.com/physicalhealthchatbot-api:latest
     working_dir: /app
     volumes:
       - ./api:/app
@@ -68,6 +69,7 @@ services:
     build:
       context: .
       dockerfile: frontend.dockerfile
+    image: 060795916183.dkr.ecr.eu-central-1.amazonaws.com/physicalhealthchatbot-frontend:latest
     ports:
       - "8501:8501"
     depends_on:
