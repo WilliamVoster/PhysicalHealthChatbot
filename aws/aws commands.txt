@@ -1,0 +1,78 @@
+root account id:
+060795916183
+
+060795916183.dkr.ecr.eu-central-1.amazonaws.com
+
+ecr repository name:
+thesis
+
+ecr repository URI:
+<aws_account_id>.dkr.ecr.<region>.amazonaws.com/<repository_name>
+060795916183.dkr.ecr.eu-central-1.amazonaws.com/thesis
+
+SSH
+ssh -i "testLogin.pem" ec2-user@ec2-63-178-13-10.eu-central-1.compute.amazonaws.com
+
+Authenticate docker to ECR:
+aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 060795916183.dkr.ecr.eu-central-1.amazonaws.com
+aws ecr get-login-password --region your-region | docker login --username AWS --password-stdin your-account-id.dkr.ecr.your-region.amazonaws.com
+
+Pull image from ECR:
+docker pull your-account-id.dkr.ecr.your-region.amazonaws.com/your-repo-name:your-tag
+docker pull 060795916183.dkr.ecr.eu-central-1.amazonaws.com/physicalhealthchatbot-api:latest
+docker pull 060795916183.dkr.ecr.eu-central-1.amazonaws.com/physicalhealthchatbot-frontend:latest
+
+
+___
+EC2 instance commands
+
+sudo yum update -y
+OR
+sudo dnf update -y
+
+sudo amazon-linux-extras install docker
+Y
+OR
+sudo dnf install -y docker
+
+sudo service docker start
+OR
+sudo systemctl start docker
+sudo systemctl enable docker
+(added service to /usr/lib/system/system/docker.service.)
+
+
+sudo usermod -a -G docker ec2-user
+
+mkdir downloads
+cd downloads
+
+sudo docker build -t ec2-flask:v1.0 -f Dockerfile .
+
+sudo docker images
+
+sudo docker run -d -p 80:5000 ec2-flask:v1.0
+^^ 5000 is for flask
+
+sudo docker ps
+
+sudo docker stop "containerID"
+
+___
+local commands, scp transfer
+
+chmod 600 xxxxx.pem
+
+scp -i xxxxxx.pem Dockerfile app.py requirements.txt ec2-user@"ipv4address":/home/ec2-user/downloads
+
+
+___
+docker pull 060795916183.dkr.ecr.eu-central-1.amazonaws.com/physicalhealthchatbot-api:latest
+docker pull 060795916183.dkr.ecr.eu-central-1.amazonaws.com/physicalhealthchatbot-frontend:latest
+
+docker-compose up -d --no-build
+
+
+
+
+
