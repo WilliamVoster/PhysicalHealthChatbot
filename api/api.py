@@ -7,7 +7,7 @@ from weaviate.classes.query import MetadataQuery, Sort
 from fastapi import FastAPI, Query
 from fastapi import Request
 # from neo4j import GraphDatabase
-from langchain_ollama import OllamaEmbeddings
+from langchain_ollama import OllamaEmbeddings, OllamaLLM
 from langchain_ollama.chat_models import ChatOllama
 from langchain.schema import HumanMessage, SystemMessage, AIMessage
 
@@ -68,9 +68,16 @@ async def root():
 #         return [record["n"] for record in result]
 
 
-async def process_llm_query(data):
+async def process_llm_query(data, context = ""):
 
     history = []
+
+    ai_role_message = \
+        """You are a medical assistant.
+        Use the provided information and context to answer accurately.
+        Do not answer confidently if you are unsure about a question."""
+    
+    history.append(SystemMessage(content=ai_role_message))
 
     chat = ChatOllama(
         base_url="http://ollama:11434", 
@@ -90,10 +97,16 @@ async def process_llm_query(data):
         elif role == "SYSTEM":
             history.append(SystemMessage(content=content))
 
+    if len(context) > 0:
+        history.append(SystemMessage(content=f"Context about the user: {context}"))
+        data["history"].append(["SYSTEM", f"Context about the user: {context}"])
+
     prompt = data["query"]
 
     history.append(HumanMessage(content=prompt))
     data["history"].append(["USER", prompt])
+
+    print("HISTORY", history)
 
     response = chat(history)
 
@@ -102,10 +115,31 @@ async def process_llm_query(data):
     return {"response": response.content, "history": data["history"]}
 
 
+def process_symptom_extraction(user_query: str):
+
+    model = OllamaLLM(
+        base_url="http://ollama:11434", 
+        model="llama3.2:latest"
+    )
+
+    response = model.invoke(
+        f"Extract only symptoms from the following text: \
+        {user_query}. \
+        Output only the symptoms as a comma-separated list, JSON format. \
+        No other words. No explanations. Example: ['symptom1', 'symptom2']"
+    )
+
+    return response
+
+
+
 @app.post("/api/query")
 async def query(request: Request):
 
     data = await request.json()
+
+    extracted = process_symptom_extraction(data["query"])
+    return extracted
     
     return await process_llm_query(data)
 
@@ -117,6 +151,7 @@ async def query_with_context(request: Request):
 
     search_term = data["query"]
 
+
     db_response = await process_db_query(search_term, "Symptoms")
 
     context_builder = []
@@ -126,9 +161,9 @@ async def query_with_context(request: Request):
     
     context = "\n".join(context_builder)
 
-    data["query"] = f"Context: \n{context} \n\n Query: {search_term}"
+    # data["query"] = f"Context: \n{context} \n\n Query: {search_term}"
 
-    return await process_llm_query(data)
+    return await process_llm_query(data, context)
 
 
 
@@ -235,7 +270,7 @@ async def process_db_query(term: str, collection_name: str):
     response = collection.query.near_text(
         query=term,
         limit=10,
-        return_metadata=MetadataQuery(distance=True, creation_time=True, last_update_time=True),
+        return_metadata=MetadataQuery(distance=True, certainty=True, creation_time=True, last_update_time=True),
         return_properties=["entity", "problem", "date", "location"],
         include_vector=True
     )
@@ -250,6 +285,8 @@ async def process_db_query(term: str, collection_name: str):
     #     ).by_property(
     #         name="_creationTimeUnix", ascending=False
     #     ),
+
+    # Use certainty as confidence to display to user
 
     return response
 
