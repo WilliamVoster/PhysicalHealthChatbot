@@ -12,8 +12,10 @@ services:
     - http                                                # as opposed to HTTPS
     image: cr.weaviate.io/semitechnologies/weaviate:1.29.0
     ports:
-      - "8080:8080"                                       # For REST API
-      - "50051:50051"                                     # For gRPC API
+      - "${EXTERNAL_PORT_WEAVIATE}:${INTERNAL_PORT_WEAVIATE}"
+      - "${EXTERNAL_PORT_WEAVIATE2}:${INTERNAL_PORT_WEAVIATE2}"
+      # - "8080:8080"                                       # For REST API
+      # - "50051:50051"                                     # For gRPC API
     volumes:
       - weaviate_data:/var/lib/weaviate                   # Named volume @ /var/lib/weaviate
     restart: on-failure:0                                 # Try restart once on failed start
@@ -40,7 +42,8 @@ services:
     container_name: ollama_container
     image: ollama/ollama:latest
     ports:
-      - "11434:11434"
+      - "${EXTERNAL_PORT_OLLAMA}:${INTERNAL_PORT_OLLAMA}"
+      # - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama  # Mount pre-downloaded models
 
@@ -56,7 +59,8 @@ services:
     volumes:
       - ./api:/app
     ports:
-      - "8000:8000"
+      - "${EXTERNAL_PORT_API}:${INTERNAL_PORT_API}"
+      # - "8000:8000"
     restart: on-failure:0
     environment:
       WEAVIATE_URL: http://weaviate:8080
@@ -71,7 +75,8 @@ services:
       dockerfile: frontend.dockerfile
     image: 060795916183.dkr.ecr.eu-central-1.amazonaws.com/physicalhealthchatbot-frontend:latest
     ports:
-      - "8501:8501"
+      - "${EXTERNAL_PORT_FRONTEND}:${INTERNAL_PORT_FRONTEND}"
+      # - "8501:8501"
     depends_on:
       - api
     develop: {}
