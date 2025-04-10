@@ -18,6 +18,8 @@ services:
       # - "50051:50051"                                     # For gRPC API
     volumes:
       - weaviate_data:/var/lib/weaviate                   # Named volume @ /var/lib/weaviate
+    networks:
+      - app-network
     restart: on-failure:0                                 # Try restart once on failed start
     environment:
       QUERY_DEFAULTS_LIMIT: 25                            # num results fetched per query
@@ -46,6 +48,8 @@ services:
       # - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama  # Mount pre-downloaded models
+    networks:
+      - app-network
 
   api:
     container_name: api_container
@@ -54,10 +58,12 @@ services:
     build:
       context: .
       dockerfile: api.dockerfile
-    image: 060795916183.dkr.ecr.eu-central-1.amazonaws.com/physicalhealthchatbot-api:latest
+    image: public.ecr.aws/r8z5h0b6/physicalhealthchatbot-api:latest
     working_dir: /app
     volumes:
       - ./api:/app
+    networks:
+      - app-network
     ports:
       - "${EXTERNAL_PORT_API}:${INTERNAL_PORT_API}"
       # - "8000:8000"
@@ -73,7 +79,9 @@ services:
     build:
       context: .
       dockerfile: frontend.dockerfile
-    image: 060795916183.dkr.ecr.eu-central-1.amazonaws.com/physicalhealthchatbot-frontend:latest
+    image: public.ecr.aws/r8z5h0b6/physicalhealthchatbot-frontend:latest
+    networks:
+      - app-network
     ports:
       - "${EXTERNAL_PORT_FRONTEND}:${INTERNAL_PORT_FRONTEND}"
       # - "8501:8501"
@@ -85,3 +93,7 @@ volumes:
   weaviate_data:
   # neo4j_data:
   ollama_data:
+
+networks:
+  app-network:
+    driver: bridge

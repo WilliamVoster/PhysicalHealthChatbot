@@ -195,7 +195,7 @@ async def create_collection():
     symptoms = client.collections.create(
         "Symptoms",
         vectorizer_config=Configure.Vectorizer.text2vec_ollama(   
-            api_endpoint="http://host.docker.internal:11434",    
+            api_endpoint="http://ollama:11434",    
             model="nomic-embed-text",
         ),
         vector_index_config=Configure.VectorIndex.hnsw(                 # Hierarchical Navigable Small World
