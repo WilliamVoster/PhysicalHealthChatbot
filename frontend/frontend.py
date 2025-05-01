@@ -16,7 +16,7 @@ def chat_show():
         text = ""
 
         for role, content in st.session_state["responses"]:
-            text += f"**{role}:**  {content}<br>"
+            text += f"**{role}:**  {content}<br><br>"
 
         chat_field.markdown(text, unsafe_allow_html=True)
 
@@ -64,7 +64,7 @@ def chat_input():
 def items_show():
     
 
-    fetch_response = requests.get("http://api:8000/get_all")
+    fetch_response = requests.get("http://api:8000/api/get_all")
     fetch_response_data = fetch_response.json()
 
     st.write(fetch_response_data)
@@ -128,6 +128,10 @@ items_show()
 if st.button("update"):
     # st.session_state.user_input = ""
     pass
+
+if st.button("reset symptoms"):
+    response = requests.get("http://api:8000/api/create_collection")
+    print(response)
 
 
 
