@@ -16,7 +16,6 @@ from langchain.schema import HumanMessage, SystemMessage, AIMessage
 
 app = FastAPI()
 
-
 client = weaviate.connect_to_custom(
     http_host="weaviate_container",
     http_port=8080,
@@ -176,9 +175,9 @@ User prompt: "{user_query}" """
         return e, False
 
 
-def db_create_object(payload: list, collection: str):
+def db_create_symptom_object(payload: list):
 
-    symptoms = client.collections.get(collection)
+    symptoms = client.collections.get("Symptoms")
 
     uuids = []
     for symptom in payload:
@@ -195,6 +194,35 @@ def db_create_object(payload: list, collection: str):
         uuids.append(uuid)
     
     return uuids
+
+
+async def process_db_query(term: str, collection_name: str):
+
+    collection = client.collections.get(collection_name)
+
+    response = collection.query.near_text(
+        query=term,
+        limit=10,
+        return_metadata=MetadataQuery(distance=True, certainty=True, creation_time=True, last_update_time=True),
+        return_properties=["symptom", "symptom_confidence", "date_recorded", "location", "recency_specified"],
+        include_vector=True
+    )
+
+    # Use autocut 1, 2 or 3
+    # only return objects with continual dinstance, e.g. if there is a break in continuity
+
+    
+    # Search automatically sorts by distance
+    # sort=Sort.by_property(
+    #         name="_distance", ascending=True
+    #     ).by_property(
+    #         name="_creationTimeUnix", ascending=False
+    #     ),
+
+    # Use certainty as confidence to display to user
+
+    return response
+
 
 
 # Program version: 1 (MVP)
@@ -222,7 +250,7 @@ async def query_with_context(request: Request):
 
     print(extracted)
     if save_symptoms:
-        uuids = db_create_object(extracted, collection="Symptoms")
+        uuids = db_create_symptom_object(extracted)
 
     # Context builder
     context_builder = []
@@ -239,8 +267,8 @@ async def query_with_context(request: Request):
     return await process_llm_query(data, context)
 
 
-@app.get("/api/create_collection")
-async def create_collection():
+@app.get("/api/create_collection_symptoms")
+async def create_collection_symptoms():
 
     client.collections.delete("Symptoms")
     symptoms = client.collections.create(
@@ -267,6 +295,30 @@ async def create_collection():
     return {"message": f"created collection: {symptoms}"}
 
 
+@app.get("/api/create_collection_articles_pubmed")
+async def create_collection_articles_pubmed():
+
+    client.collections.delete("Articles_pubmed")
+    collection_pubmed = client.collections.create(
+        "Articles_pubmed",
+        vectorizer_config=Configure.Vectorizer.text2vec_ollama(   
+            api_endpoint="http://ollama:11434",    
+            model="nomic-embed-text",
+        ),
+        vector_index_config=Configure.VectorIndex.hnsw(                 # Hierarchical Navigable Small World
+            distance_metric=VectorDistances.COSINE                      # Default, and good for NLP
+        ),
+        properties=[
+            Property(name="chunk", data_type=DataType.TEXT),
+            Property(name="full_article_id", data_type=DataType.TEXT),
+            Property(name="last_updated", data_type=DataType.DATE)
+        ]
+    )
+
+    print("response", collection_pubmed)
+    return {"message": f"created collection: {collection_pubmed}"}
+
+
 @app.get("/api/create_object")
 async def create_object():
 
@@ -291,7 +343,7 @@ async def create_object():
 
 #     payload = data["payload"]
 
-#     uuids = db_create_object(payload=payload, collection=data["collection"])
+#     uuids = db_create_symptom_object(payload=payload)
 
 #     return f"created object(s) with id(s): {uuids}"
 
@@ -331,41 +383,32 @@ async def get_all():
     return {"message": return_data}
 
 
-async def process_db_query(term: str, collection_name: str):
-
-    collection = client.collections.get(collection_name)
-
-    response = collection.query.near_text(
-        query=term,
-        limit=10,
-        return_metadata=MetadataQuery(distance=True, certainty=True, creation_time=True, last_update_time=True),
-        return_properties=["symptom", "symptom_confidence", "date_recorded", "location", "recency_specified"],
-        include_vector=True
-    )
-
-    # Use autocut 1, 2 or 3
-    # only return objects with continual dinstance, e.g. if there is a break in continuity
-
+@app.get("/api/get_all_chunks")
+async def get_all_chunks():
     
-    # Search automatically sorts by distance
-    # sort=Sort.by_property(
-    #         name="_distance", ascending=True
-    #     ).by_property(
-    #         name="_creationTimeUnix", ascending=False
-    #     ),
+    collection = client.collections.get("Articles_pubmed")
+    return_data = []
 
-    # Use certainty as confidence to display to user
+    for item in collection.iterator():
+        return_data.append({"uuid": item.uuid, "properties": item.properties})
 
-    return response
+    return {"message": return_data}
 
 
-@app.get("/api/get_near")
-async def get_near(term: str = Query(..., description="Search term for Weaviate")):
+@app.get("/api/get_symptomp_near")
+async def get_symptom_near(term: str = Query(..., description="Search-term for Weaviate")):
 
     response = await process_db_query(term, "Symptoms")
 
     return {"response": response}
 
+
+@app.get("/api/get_article_near")
+async def get_article_near(term: str = Query(..., description="Search-term for Weaviate")):
+
+    response = await process_db_query(term, "Articles_pubmed")
+
+    return {"response": response}
  
 
 
