@@ -31,7 +31,7 @@ data_dir_path = ["C:\\", "Users", "willi", "Documents", "NTNU", "Master", "data"
 # csv_path = "oa_comm_txt.PMC011xxxxxx.baseline.2024-12-17.filelist.csv"
 csv_path = sys.argv[1]
 # PMID_to_start_from = sys.argv[2]
-num_articles_to_parse = sys.argv[2]
+num_articles_to_parse = int(sys.argv[2])
 
 
 client = weaviate.connect_to_custom(
