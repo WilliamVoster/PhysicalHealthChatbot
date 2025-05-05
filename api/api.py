@@ -42,7 +42,7 @@ async def root():
     return collections
 
 
-async def process_llm_query(data, context = ""):
+async def process_llm_query(data, user_context = "", article_context = ""):
 
     history = []
 
@@ -74,9 +74,24 @@ async def process_llm_query(data, context = ""):
         elif role == "SYSTEM":
             history.append(SystemMessage(content=content))
 
-    if len(context) > 0:
-        history.append(SystemMessage(content=f"Context about the user: {context}"))
-        data["history"].append(["SYSTEM", f"Context about the user: {context}"])
+    if len(user_context) > 0:
+        history.append(SystemMessage(
+            content=f"Context about the user: {user_context}")
+        )
+        data["history"].append([
+            "SYSTEM", 
+            f"Context about the user: {user_context}"
+        ])
+
+    if len(article_context) > 0:
+        content = \
+            f"Context fetched from raw chunks of published medical articles, "\
+            f"please use this information with a pinch of salt, "\
+            f"it is also fine to not use these in your response: {article_context}"
+        
+        history.append(SystemMessage(content=content))
+
+        data["history"].append(["SYSTEM", content])
 
     prompt = data["query"]
 
@@ -175,6 +190,37 @@ User prompt: "{user_query}" """
         return e, False
 
 
+def build_user_context(db_response):
+
+    context_builder = []
+
+    for o in db_response.objects:
+        context_builder.append(
+            f"Recorded {o.properties['symptom']}, "
+            f"with {o.properties['symptom_confidence']} confidence, "
+            f"at a time of {o.properties['recency_specified']} - "
+            f"recorded at: {o.properties['date_recorded']}"
+        )
+
+    context = "\n".join(context_builder)
+    return context
+
+
+def build_article_context(db_response):
+
+    context_builder = []
+
+    for o in db_response.objects:
+        context_builder.append(
+            f"\nThis raw chunk comes from article {o.properties['full_article_id']}, "
+            f"last updated at {o.properties['last_updated'].date()} - "
+            f"Recorded chunk: {o.properties['chunk']}"
+        )
+        
+    context = "\n".join(context_builder)
+    return context
+
+
 def db_create_symptom_object(payload: list):
 
     symptoms = client.collections.get("Symptoms")
@@ -196,16 +242,27 @@ def db_create_symptom_object(payload: list):
     return uuids
 
 
-async def process_db_query(term: str, collection_name: str):
+async def process_db_query_symptoms(term: str):
 
-    collection = client.collections.get(collection_name)
+    collection = client.collections.get("Symptoms")
 
     response = collection.query.near_text(
         query=term,
         limit=10,
-        return_metadata=MetadataQuery(distance=True, certainty=True, creation_time=True, last_update_time=True),
-        return_properties=["symptom", "symptom_confidence", "date_recorded", "location", "recency_specified"],
-        include_vector=True
+        return_metadata=MetadataQuery(
+            distance=True, 
+            certainty=True, 
+            creation_time=True, 
+            last_update_time=True
+        ),
+        return_properties=[
+            "symptom", 
+            "symptom_confidence", 
+            "date_recorded", 
+            "location", 
+            "recency_specified"
+        ],
+        include_vector=False
     )
 
     # Use autocut 1, 2 or 3
@@ -224,6 +281,29 @@ async def process_db_query(term: str, collection_name: str):
     return response
 
 
+async def process_db_query_articles(term: str):
+
+    collection = client.collections.get("Articles_pubmed")
+
+    response = collection.query.near_text(
+        query=term,
+        limit=10,
+        return_metadata=MetadataQuery(
+            distance=True, 
+            certainty=True, 
+            creation_time=True, 
+            last_update_time=True
+        ),
+        return_properties=[
+            "chunk", 
+            "full_article_id", 
+            "last_updated"
+        ],
+        include_vector=False
+    )
+
+    return response
+
 
 # Program version: 1 (MVP)
 @app.post("/api/query")
@@ -234,7 +314,7 @@ async def query(request: Request):
     return await process_llm_query(data)
 
 
-# Program version: 2 (with context)
+# Program version: 2 (with user context)
 @app.post("/api/query_with_context")
 async def query_with_context(request: Request):
 
@@ -243,28 +323,33 @@ async def query_with_context(request: Request):
     user_query = data["query"]
 
     # Context fetching
-    db_response = await process_db_query(user_query, "Symptoms")
-    
+    db_response_symptoms = await process_db_query_symptoms(user_query)
+    db_response_articles = await process_db_query_articles(user_query)
+
+    # Context building
+    user_context = build_user_context(db_response_symptoms)
+    article_context = build_article_context(db_response_articles)
+
     # Context extraction
     extracted, save_symptoms = process_symptom_extraction(user_query)
+    if save_symptoms: uuids = db_create_symptom_object(extracted)
 
-    print(extracted)
-    if save_symptoms:
-        uuids = db_create_symptom_object(extracted)
-
-    # Context builder
-    context_builder = []
-    for o in db_response.objects:
-        context_builder.append(
-            f"Recorded {o.properties['symptom']}, \
-            with {o.properties['symptom_confidence']} confidence, \
-            at a time of {o.properties['recency_specified']} - \
-            recorded at: {o.properties['date_recorded']}"
-        )
-    context = "\n".join(context_builder)
+    
+    return await process_llm_query(data, user_context, article_context)
 
 
-    return await process_llm_query(data, context)
+# # Program version: 3 (with article context)
+# @app.post("/api/query_with_article_context")
+# async def query_with_article_context(request: Request):
+
+#     data = await request.json()
+
+#     user_query = data["query"]
+
+#     # Context fetching
+#     db_response = await process_db_query_articles(user_query)
+
+#     return db_response
 
 
 @app.get("/api/create_collection_symptoms")
@@ -398,7 +483,7 @@ async def get_all_chunks():
 @app.get("/api/get_symptomp_near")
 async def get_symptom_near(term: str = Query(..., description="Search-term for Weaviate")):
 
-    response = await process_db_query(term, "Symptoms")
+    response = await process_db_query_symptoms(term, "Symptoms")
 
     return {"response": response}
 
@@ -406,7 +491,7 @@ async def get_symptom_near(term: str = Query(..., description="Search-term for W
 @app.get("/api/get_article_near")
 async def get_article_near(term: str = Query(..., description="Search-term for Weaviate")):
 
-    response = await process_db_query(term, "Articles_pubmed")
+    response = await process_db_query_articles(term, "Articles_pubmed")
 
     return {"response": response}
  
