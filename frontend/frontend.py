@@ -130,7 +130,7 @@ if st.button("update"):
     pass
 
 if st.button("reset symptoms"):
-    response = requests.get("http://api:8000/api/create_collection")
+    response = requests.get("http://api:8000/api/create_collection_symptoms")
     print(response)
 
 
