@@ -51,7 +51,8 @@ def chat_input():
         }
 
         # response = requests.post("http://api:8000/api/query", json=data)
-        response = requests.post("http://api:8000/api/query_with_context", json=data)
+        # response = requests.post("http://api:8000/api/query_with_context", json=data)
+        response = requests.post(st.session_state["endpoint"], json=data)
         
         response_data = response.json()
 
@@ -84,6 +85,16 @@ def items_show():
             st.write(delete_response_data)
             
 
+def select_system():
+    selected_option = st.selectbox(
+        "Select an endpoint:",
+        # ["v1-only_AQ_context", "v2-user+article_context", "v3-agentified"]
+        ["/api/query", "/api/query_with_context", "/api/query_agent"]
+    )
+
+    st.session_state["endpoint"] = "http://api:8000" + selected_option
+
+    # st.write(f"You selected: {selected_option}")
 
 
 
@@ -120,6 +131,8 @@ st.title("Chatbot")
 chat_field = st.empty()
 
 chat_show()
+
+select_system()
 
 chat_input()
 
