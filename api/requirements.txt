@@ -3,4 +3,8 @@ weaviate-client
 neo4j
 python-dotenv
 uvicorn
-langchain_ollama
+langchain-ollama
+langchain
+langchain-core
+langgraph
+asyncio
