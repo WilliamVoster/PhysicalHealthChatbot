@@ -63,19 +63,17 @@ async def process_llm_query(data, user_context = "", article_context = "", user_
     if "history" not in data: 
         data["history"] = []
 
-    # chat = ChatOllama(
-    #     base_url="http://ollama:11434", 
-    #     model="llama3.2:latest"
-    # )
-
-    ai_role_message = \
-        """You are an expert on physcial health, a personal trainer and motivator!
-        You are not a trained medical professional.
-        Use the provided information and context to answer accurately.
-        Do not answer confidently if you are unsure about a question.
-        Please answer in one paragraph or less, where possible."""
     
-    history.append(SystemMessage(content=ai_role_message))
+    system_prompt = \
+        f"You are an expert on physcial health, a personal trainer and motivator! " \
+        f"You are not a trained medical professional. "\
+        f"Use the provided information and context to answer accurately. "\
+        f"Do not answer confidently if you are unsure about a question. "\
+        f"If you don't know the answer, just say that you don't know. "\
+        f"Use three sentences maximum and keep the answer concise.\n"\
+        # f"Context: [{context}]"
+    
+    history.append(SystemMessage(content=system_prompt))
 
     for role, content in data["history"]:
         print(role)
@@ -90,10 +88,10 @@ async def process_llm_query(data, user_context = "", article_context = "", user_
         elif role == "SYSTEM":
             history.append(SystemMessage(content=content))
 
-    if isinstance(user_activity_quotient, float):
+    if user_activity_quotient is not None:
         content = \
-            f"An automated system silently found their current AQ score: {user_activity_quotient}. \n" \
-            f"The user did not mention this themselves." \
+            f"An automated system silently found the user's current activity quotient (AQ):" \
+            f"{user_activity_quotient}. \n The user did not mention this themselves." \
             f"AQ stands for activity quotient, and is the successor to the PAI score (personal activity intelligence)." \
             f"It scores a persons physcial activity, where 100 points gives the maximum possible health benefits."
 
@@ -126,7 +124,40 @@ async def process_llm_query(data, user_context = "", article_context = "", user_
 
     data["history"].append(["AI", response.content])
 
+    print("888888888888888888888888888888888888888888888888 data[history]: ", data["history"])
+
     return {"response": response.content, "history": data["history"]}
+
+
+def process_llm_query_from_messages(messages: list):
+
+    # user_context = ""
+    # article_context = ""
+    # aq = None
+    history = []
+
+    for msg in messages:
+
+        if isinstance(msg, HumanMessage):
+            history.append(["USER", msg.content])
+
+        if isinstance(msg, ToolMessage):
+            history.append(["SYSTEM", msg.content])
+
+        if isinstance(msg, AIMessage):
+            if len(msg.content) <= 0: 
+                continue
+                # history.append(["TOOL", ])
+
+            history.append(["AI", msg.content])
+
+
+
+    print("888888888888888888888888888888888888888888888888 agent messages: ", messages)
+    print("888888888888888888888888888888888888888888888888 agent history: ", history)
+    print("888888888888888888888888888888888888888888888888 agent response: ", messages[-1].content)
+    
+    return {"response": messages[-1].content, "history": history}
 
 
 def process_symptom_extraction(user_query: str):
@@ -329,9 +360,11 @@ async def process_db_query_articles(term: str):
     print("ØØØØØ process_db_query_articles ", response)
     return response
 
+def get_activity_quotient() -> float:
+    return 12.0
 
-def get_activity_quotient(term: str) -> float:
-    aq = 12.0
+def get_activity_quotient_string(term: str = "") -> str:
+    aq = get_activity_quotient()
     return f"The user's current activity quotient (AQ) is {aq}."
 
 
@@ -360,7 +393,7 @@ tool_retrieve_articles = Tool(
 
 tool_retrieve_user_activity_quotient = Tool(
     name="retrieve_user_activity_quotient",
-    func= get_activity_quotient,
+    func= get_activity_quotient_string,
     description="Fetch the user's current AQ / Activity Quotient. This is a score from 0-100 of how physically active they are."
 )
 
@@ -406,10 +439,12 @@ def node_generate_answer(state: MessagesState):
         if type(msg) == ToolMessage:
             if msg.name != "no_tool":
                 context = f"[{msg.content}] from {msg.name}, the next context provided is:{context}"
-
+    
     system_prompt = \
-        f"You are an assistant. "\
-        f"You may use the following pieces of retrieved context to answer the user "\
+        f"You are an expert on physcial health, a personal trainer and motivator! " \
+        f"You are not a trained medical professional. "\
+        f"Use the provided information and context to answer accurately. "\
+        f"Do not answer confidently if you are unsure about a question. "\
         f"If you don't know the answer, just say that you don't know. "\
         f"Use three sentences maximum and keep the answer concise.\n"\
         f"Context: [{context}]"
@@ -539,6 +574,7 @@ async def query_with_context(request: Request):
     # Context building
     user_context = build_user_context(db_response_symptoms)
     article_context = build_article_context(db_response_articles)
+    user_context = f"{user_context}. The user's current activity quotient (AQ) is {aq}."
 
     # Context extraction
     extracted, save_symptoms = process_symptom_extraction(user_query)
@@ -576,6 +612,8 @@ async def query_agent(request: Request):
 
     final_response = messages["messages"][-1]
     final_response.pretty_print()
+
+    return process_llm_query_from_messages(messages["messages"])
     
     return final_response
 
