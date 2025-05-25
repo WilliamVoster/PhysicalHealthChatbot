@@ -73,6 +73,7 @@ def items_show():
 
     for item in fetch_response_data["message"]:
         st.subheader(f"item: {item['uuid']}")
+        st.text(f"symptom: {item['properties']['symptom']}\n\n")
         st.text(f"Properties: {item['properties']}")
 
         if st.button(f"Delete {item['uuid']}", key=f"delete_id_{item['uuid']}"):
