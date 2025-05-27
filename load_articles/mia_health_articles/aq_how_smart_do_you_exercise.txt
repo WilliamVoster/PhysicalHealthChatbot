@@ -1,0 +1,171 @@
+AQ: How smart do you exercise?
+AQ is an advanced but very easy-to-use scoring system that rewards you for any physical activity that increases your heart rate above a certain level. Your unique AQ tells you exactly how much better health you get from the physical activity you do.
+AQ_03
+AQ, NTNU's new flagship for objective measurement of physical activity, can only be measured with the Mia Health app.
+The Norwegian University of Science and Techology (NTNU) and Mia Health have developed AQ from research with more than one million women and men and data sets that span many decades. We dare to say that the world has never seen a more accurate measure of the health effects of physical activity.
+
+AQ replaces PAI
+Many of you reading this article have previously used PAI to measure how effectively you exercise. And let's just be clear about that right away: AQ is even better and more accurate than PAI. AQ is based on much more research and practical experience than PAI. This makes the algorithm both more accurate and more user-friendly.
+
+AQ, which stands for Activity Quotient, basically measures the same thing as PAI, only more precisely. So now that AQ is here, it's time to say goodbye to PAI in the Mia Health app. Now it's all about AQ, and we're confident that the new algorithm will take your motivation for physical activity to new heights.
+
+What does AQ measure?
+AQ is a measure of the health impact of endurance activity. By endurance activity, we mean activities where you use large muscle groups for several minutes continuously at a level that causes you to breath faster and start sweating (1). Examples include walking, running, cycling, cross-country skiing, swimming, dancing, rowing or using an elliptical machine.
+
+The health effects of endurance activity are determined by how often you are active, how long you do it each time, and how hard you push yourself (2). AQ simply measures the total effort you put into your endurance activities, and converts this into a number that is continuously updated in line with your activity habits.
+
+Specifically, AQ gives you a snapshot of how effectively you have exercise over the past seven days. Thus, the AQ score in it self does not say anything about your health, but is a recipe for how you can get better health over time and maintain good health throughout your life. In combination with your fitness age, which you can also follow continuously in the Mia Health app, your AQ makes it easy to understand the health benefits of the activity you have done.
+
+Cycling gives AQ
+Bicycling is a great way to accumulate AQ, just like any other endurance activity that requires you to use large muscle groups.
+How is AQ measured?
+AQ doesn't care how many steps you walk, how fast you move from A to B, or if you're active every day. AQ only cares about your personal heart rate curves from the last seven days. That's because your heart rate is the best measure of how hard you're working during an endurance activity (3, 4, 5).
+
+AQ is for everyone
+Because AQ is governed by heart rate and effort, it's an equally good measure of health impact whether you're fit or unfit. If you and a friend put in the same amount of effort during an activity, you'll also be rewarded with roughly the same AQ, even if the fittest of you has run a longer distance and maintained a higher speed.
+
+AQ is simply perfectly matched to your physical fitness. And by maintaining a certain AQ over time, your body and fitness age will gradually adapt to your activity level.
+
+AQ with heart rate monitor
+In recent years, it has become easy to accurately measure your heart rate continuously throughout the day (6), and nearly 200 million smartwatches are sold worldwide every year (7). But measuring your heart rate is in itself quite useless if you don't know what the heart rate measurements actually mean for you.
+
+What AQ does is convert your heart rate into a score that gives you a complete overview of how healthy you've actually been exercising over the past week, no matter how many kilometers you've moved and how many minutes you've spent being active.
+
+Your AQ can range from 0 to well over 100 based on how active you've been.
+
+With an AQ of 0, you haven't done any endurance activity that has had a noticeable effect on your health in the last seven days.
+By keeping your AQ at 50 over time, you've done more than average and laid a foundation for fairly good health.
+To get the best health you can get with physical activity, the key is to keep your AQ continuously at 100 or more.
+Later in this article, we describe the different AQ values in more detail and give you a good starting point for finding your personal AQ goal.
+
+Smartwatch
+Modern smartwatches accurately measure heart rate in most situations. With the AQ/smartwatch combination, it has never been easier to understand the health impact of your endurance activities.
+AQ without a heart rate monitor
+Although the AQ algorithm is based on your heart rate, it is possible to measure your AQ without using a heart rate monitor. We know from large Norwegian population surveys how much effort most people put into activity that they themselves define as "easy", "moderate" and "hard" (8, 9, 10, 11).
+
+When you enter activity manually in the Mia Health app, we ask you to answer the same questions as the participants in these population surveys. This gives us answers to how long, how often and how hard you exercise during your endurance activities. It also allows us to give you a relatively accurate score for your activity, even if we don't have the exact heart rate values for every minute of your sessions.
+
+The workouts that give you AQ
+The main reason endurance exercise is good for your health is that it affects your cardiorespiratory fitness (12). Fitness, measured as maximum oxygen uptake, is perhaps the single most telling factor about your health today and your risk of poor health in the future (13, 14).
+
+That's why it's been a natural priority for Mia Health to give our users a precise tool to achieve better health through increased fitness. And that's exactly what AQ does. Let's go through the four key principles that underpin the algorithm.
+
+1. Low heart rate does not result in AQ
+The first principle of NTNU's AQ algorithm is that only exercise that contributes to increased fitness earns points. The lower limit for earning AQ will therefore be around 60% of maximum heart rate for most people.
+
+You've probably heard that any activity is better for your health than no activity. And that's pretty much true. Several studies show that people who never exercise, but are nevertheless regularly active throughout the day, gain more healthy years of life than those who are mostly sedentary (15).
+
+This doesn't mean, however, that most people can get away with doing simple tasks around the house and garden if the goal is for the activity to lead to good health. For most people, this type of activity will not increase the heart rate enough to have a fitness effect (16).
+
+When interpreting the results of research articles, it's important to remember what you're comparing them to. As a rule, people who do not exercise are also less fit than people who do (17). For older people who do not exercise regularly, even typical everyday activities can therefore be strenuous enough to raise the heart rate and reduce the health risk compared to older people who spend most of the day on the couch.
+
+From the Trøndelag Health Study, for example, we know that people who only report being active at "low intensity", such as housework and gardening, achieve around 60% of their maximum heart rate during this activity (8, 9, 10, 11). This isn't particularly hard, but it's enough to make you breathe fast and feel your heart pumping. The reward is better fitness and health than those who are completely inactive and have the worst fitness, but far from optimal health.
+
+Gardening can provide AQ
+If your fitness level is poor, housework and gardening can be strenuous enough to have an effect on your health. Therefore, some people will also gain AQ points from this type of everyday activity, but for healthy, younger people it usually requires more effort.
+2. The more out of breath, the higher the AQ
+Another principle of NTNU's AQ algorithm is that the higher the heart rate, the faster the earnings.
+
+In the Mia Health app, we divide activity into three heart rate zones: low, moderate and high. These zones are really just illustrative. It's your exact heart rate value that determines how quickly you earn AQ. For example, if you exercise at an intensity of 80% of your maximum heart rate, you'll earn AQ faster than if you exercise at 75% of your maximum heart rate, even though both 75% and 80% of maximum heart rate are in the moderate heart rate zone for most people.
+
+There are two reasons why the algorithm is designed this way. Firstly, research clearly shows that fitness increases faster the higher the intensity of exercise (9, 17, 18, 19). Secondly, results from a number of population studies show that progressively higher levels of exercise intensity are linked to progressively better health and a lower risk of poor health in the future (8, 20, 21, 22).
+
+AQ has been developed and validated with data from various population studies from around the world (23, 24, 25, 26). In these population studies, all participants have reported how physically active they are, and the level of exertion is defined in many different ways. As a result, we have a better basis than ever before for predicting how much activity is needed at a given level of intensity to achieve specific effects on health and fitness.
+
+Extensive research tells us that the really rapid leaps in health effects come when you approach the highest intensity levels (8, 22, 27, 28). For example, people who exercise at intensities above 80% and up to 90% of their maximum heart rate will gain more health benefits than those who mainly exercise at lower heart rates, given that the two groups spend the same amount of time exercising (8, 29).
+
+The AQ algorithm takes into account how much each intensity level benefits your health, and analyzes this into an overall score based on how long you exercise at each intensity.
+
+3. Maximum effort is unnecessary
+The third principle of NTNU's AQ algorithm is that the physiological adaptations stagnate before you reach your maximum heart rate.
+
+Although high intensity provides a quick AQ payoff, it's not necessary to push yourself all the way up to maximum heart rate to maximize the effect. From a purely physiological point of view, we benefit most from exercising at the heart rate level where the heart pumps blood most efficiently to the body. Such exercise strengthens the heart and fitness the fastest (30, 31).
+
+When doing endurance activities, the heart not only beats faster, but it also pumps more blood with each beat. Several research papers suggest that this stroke volume of the heart increases all the way up to 90-95% of maximum heart rate before leveling off (32). To achieve maximum stroke volume and the greatest effect on fitness and health, it should therefore not be necessary to push the body completely to maximum heart rate.
+
+Actually, no research articles suggest that fitness increases faster and the health effect is greater by exercising until you see the Grim Reaper (19). That's why the AQ algorithm flattens out as you approach the peak, and for most people this flattening occurs around 90% of their maximum heart rate.
+
+High heart rate gives AQ
+Exercising at a high heart rate is good for both body and mind, but it's unnecessary to exhaust yourself completely to achieve peak health benefits.
+4. Six rest days in a row don't pay off
+The fourth principle of NTNU's AQ algorithm is that the optimal health effect of physical activity requires at least two active days each week.
+
+How you choose to strengthen your AQ is of little concern to us. If you prefer to be active every day, you can reach your AQ goal with slightly less strenuous activity. If you don't have much time to be physically active, on the other hand, it's a good idea to get even more out of breath and sweaty once you're active.
+
+For example, let's say you're active for 30 minutes of fairly strenuous activity. You're out of breath and sweaty throughout the session, but stay in the moderate heart rate zone. The result will typically be around 15-20 AQ, and you'll be well on your way to 100 AQ and optimal health effects if you can manage this level of activity five days a week.
+
+To get away with fewer days, you'll need to either keep going longer each day or increase your effort. With hard continuous effort at the threshold of what you can handle, you can get all the way to 65 AQ in one hour. With intensive interval training, you can earn the points even faster.
+
+But no matter how long and hard you exercise, we'll stop you when you've reached 65 AQ points for the day. There's a lot of good health in training hard one day a week (8, 33), but optimal gains require at least two active days each week (34). So if your goal is to stay above 100 AQ, you need to set aside at least two days a week for endurance activities.
+
+Strength training does not provide AQ
+Since a low heart rate doesn't give you AQ, you've probably already realized that you're unlikely to earn AQ through pure strength training. If you find that your AQ increases after doing strength training, it simply means that you're doing strength training in a way that raises your heart rate and puts so much strain on your heart that it actually affects your cardiorespiratory fitness.
+
+Even if you're not rewarded with AQ, strength training is of course also good for your health. With stronger muscles, the body can handle more and is less prone to injuries, and as you get older, strength training can simply be a prerequisite for being able to perform effective endurance training (35). Mia Health encourages everyone to do both strength and endurance training, although our app currently mainly evaluates the effects of your endurance training.
+
+Strength training lowers AQ
+Everyone should do strength training, but AQ is primarily a measure of the health effects of endurance training.
+AQ is supported by up-to-date research
+NTNU and Mia Health wanted to create an activity algorithm that motivates you to improve your fitness. Fitness is, as mentioned, very closely linked to health, and with AQ we give everyone an easy way to reach the fitness level they want.
+
+How fit do you need to be?
+
+Previous research has suggested that a maximum oxygen uptake slightly above average for your age is sufficient to be optimally protected against poor health (36, 37). For Norwegian men and women in their 60s, this corresponds to a fitness number of 35-40 ml/kg/min (10). This has also been the premise for Mia Health: With 100 PAI (our previous activity algorithm), you ensured enough physical activity to achieve the average fitness level for your age (38) - and thus also the greatest possible reduction in the risk of lifestyle diseases (39, 40, 41, 42, 43, 44, 45, 46).
+
+Now, however, new analyses with one million participants show that both women and men run the lowest health risk when their fitness level is higher than average (14, 47). For example, a fitness level of at least 50 ml/kg/min appears to be ideal for men and women in their 60s (14), which is significantly higher than average.
+
+The same applies to younger age groups too: Those with the highest fitness levels have the best health and live the longest (14, 47). Those with average fitness seem to have about twice the risk (14).
+
+That still means that with average fitness, you're well protected against lifestyle diseases and early death. But it also means that you can do even more to reduce your risk to the maximum.
+
+How much activity do you need?
+As we learn more and more about the importance of high fitness, more research has emerged describing how effective endurance training at different intensities actually is for health (48, 49, 50). In line with this, health authorities all over the world have also published updated activity recommendations for most people (51, 52).
+
+Any activity is still considered better than no activity, and the greatest effect on health comes when you increase from being physically inactive to becoming somewhat physically active. At the same time, it appears that the maximum health benefit of physical activity is even greater than previously demonstrated, and that the level of activity required to achieve the full effect is somewhat greater than previously described (48, 49, 50, 51, 52).
+
+Where previously you were encouraged to be active with moderate intensity for at least 150 minutes each week, the minimum recommendations have now increased to 300 minutes a week (51, 52). The reason for this is the same as we have just discussed when it comes to fitness. With new and more comprehensive research data, it is possible to define optimal physical activity levels even more precisely than before.
+
+The latest Norwegian analyses show that people who meet the new activity recommendations gain 13 healthy years of life and have a 73% reduced risk of premature death compared with the physically inactive (48, 52). Those who "only" manage 150 minutes of activity gain over 80% of the health benefits. And even those who are less active, but still achieve 50 minutes a week, can also expect around half the health benefits.
+
+So every little bit helps. And AQ let you see excactly how much your activity benefits you.
+
+Swimming gives AQ
+Any activity that increases your heart rate is good for your health. Recent research shows that the optimal amount of activity increases the chance of living a long life in good health even more than previously thought.
+How high AQ do you need?
+The new information about fitness, physical activity and health also sets the stage for the AQ algorithm. To be optimally protected against reduced quality of life, future disease and early death, you actually need to be active at a slightly higher and more systematic level than previously recommended.
+
+What is good enough for you?
+
+Only you can decide what's good enough for you. So instead of us telling you how high AQ you need, we encourage you to set your own AQ goal. Feel free to use the AQ guide below to find a reasonable starting point.
+
+25 AQ is good for the beginner. Earlier in the article, we described how untrained people can achieve health-enhancing heart rate increases with small everyday activities. Such activity will never get anyone's AQ close to 100, but maybe you can reach 25? And if your starting point is poor, 25 AQ will help you take a small step towards a lower fitness age. If, on the other hand, you're in somewhat OK shape, 25 AQ will be too little to improve your health. All in all, an activity level of 25 AQ over time will give you better health than the couch potato, but worse than the average person.
+To achieve 25 AQ, you can, for example, be active for 20 minutes every day at a level of intensity that makes you breath fast but still able to lead a conversation with the person next to you. This corresponds to a heart rate level at the tipping point between the low and moderate heart rate zone in the Mia Health app.
+You can also be active at a high level one day a week, for example half an hour where you push yourself so hard that you are breathing really fast and have more than enough to keep the pace up towards the end of the session. Your heart rate on such a ride will be right on the borderline between the moderate and high heart rate zones in the Mia Health app.
+50 AQ will for most people be good enough to keep their fitness age around their real age. In other words, you can expect to be as healthy as the average for your age. A good goal for those who have not exercised much before! If you're already regularly active and in better shape than many others your age, you can aim higher.
+For example, to achieve 50 AQ, you can be active for 150 minutes every week at an intensity of around 75% of your maximum heart rate. You'll be out of breath and sweaty, but can participate in a conversation as long as your sentences aren't too long.
+You can also train at a higher intensity for a total of 75 minutes a week, spread over at least two days. With an average intensity level of around 80% of your maximum heart rate, most people will earn around two AQ points every three minutes. At this intensity level, you're still in the moderate heart rate zone and still have some way to go without wearing yourself out.
+With 75 AQ, you've realized most of the health benefits physical activity can give you. Over time, 75 AQ will bring your fitness to a level better than most people your age. For the perfectionist, however, there's still more to be gained by increasing your activity level even more.
+To achieve 75 AQ, it's an advantage to carry out parts of the activity so intensively that you enter the high intensity zone. How about setting aside one of your weekly training sessions for interval training with so many (4-5) and long (3-5 minutes) intervals that you earn 30 AQ? Then you can use the rest of the week to collect another 45 AQ with other forms of exercise.
+If you love to push yourself, but don't thrive when your heart rate gets very high, it's good to know that you can also achieve 75 AQ with activities in the upper part of the moderate heart rate zone. In that case, you should probably aim for 4-5 sessions of at least half an hour each week.
+100 AQ will take your fitness and health to new heights. Staying above 100 takes a lot of effort, but with good routines, it's a level of activity most people can manage. By maintaining 100 AQ for several years, you will end up among the fittest part of the population in your age group and lay an optimal foundation for many healthy years of life.
+Do you like interval training? The most time-efficient way to stay above 100 AQ is to do high-intensity interval training three days a week. With 4-6 intervals of 3-6 minutes, you'll quickly end up with 10-15 minutes with a heart rate up to and above 90% of your maximum heart rate. In addition, you get many minutes with a slightly lower heart rate. In total, you'll quickly end up with 35-40 AQ per session
+With extreme effort, it's possible to achieve 65 AQ every single day. While 100 AQ over seven days is good enough for your health, you can of course set more ambitious goals. For most people, there's no need to worry that their activity level can become so high that it's detrimental to their health (53, 54).
+
+Remember, however, that it's continuity that's important and that your AQ only gives you a snapshot of the effort you've put in over the past week. AQ values up to and above 200 AQ place great demands on motivation and require that you have the time and capacity to recover well between each training session.
+
+So instead of working hard to maximize your AQ earnings in single weeks, Mia Health advocates creating good habits that allow you to maintain a stable AQ level that works for you over the long term.
+
+home-big-image-3
+Only you can decide what's the right AQ target for you. While 100+ is best for everyone, with 50 AQ you've already secured at least 70% of the maximum health effect.
+AQ is adaptable
+Remember that AQ is controlled by your heart rate. Firstly, it means that an untrained person looking to get fit has just as much chance of achieving 100 AQ as a well-trained person of low fitness age. Initially, it doesn't take steep hills or high speeds for the AQ points to roll in for the unfit person, while the fit person has to run both fast and far to get the same AQ.
+
+As the previously inactive person becomes fitter and his fitness age decreases, he is able to do more work than before without increasing his heart rate. He will move longer than before without expending more effort, and suddenly the normal route is completed five minutes faster than when he started exercising.
+
+The result of spending less time at the same training intensity is naturally a lower AQ. His fitness has improved. But fto maintain 100 AQ and continue on the path to ideal fitness, they now need to add an extra loop to their workout.
+
+This way, your AQ constantly adapts to your physical fitness. That's why the AQ goal you set will also act as a long-term guideline for how good your health will be in the long run. The goal can of course be adjusted along the way, but for many people it makes sense to aim for less than 100.
+
+AQ is suitable for everyone, regardless of their physical abilities, how motivated they are and how much time they can devote to physical activity. The algorithm is more accurate and based on up-to-date research than any other. AQ is simply everything you need to get started with health-promoting physical activity at the level you want.
+
+And you only measure AQ with Mia Health.

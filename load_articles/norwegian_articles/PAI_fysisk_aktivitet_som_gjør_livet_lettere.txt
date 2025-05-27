@@ -1,0 +1,178 @@
+PAI – fysisk aktivitet som gjør livet lettere
+NB! Fra september 2024 er PAI erstattet av AQ, et enda bedre og mer forskningsbasert mål på helseeffekten av aktiviteten din. Klikk her for å lese mer om AQ, NTNUs nye flaggskip for måling av fysisk aktivitet.
+ 
+
+12, 87 eller 119? PAI-scoren i Mia Health-appen er ikke bare et tall. Det er det eneste tallet du trenger for å vite om du er aktiv nok til å ta vare på din egen helse. Dette er historien om hvordan PAI ble til, og hvorfor vi vet at PAI kan hjelpe akkurat deg til et lengre og friskere liv.
+
+Vi starter i Roma, i august 2016. På verdens største kongress for hjerteforskere. Mer enn 30 000 fagfolk er samlet for å bli oppdatert på det siste av det siste. Noen ytterst få av dem har blitt håndplukket til å fortelle nysgjerrige journalister om sine ferskeste forskningsoppdagelser.
+
+En av de få utvalgte er Ulrik Wisløff. NTNU-professoren som i flere tiår har sprengt grenser med banebrytende forskning om treningens effekter for helsa. Nå har han funnet oppskriften som trumfer alt han har anbefalt tidligere.
+
+I Roma får verden for første gang presentert forskningen bak algoritmen som forlenger og forenkler livet: PAI – Personal Activity Intelligence, den nye forskningsbaserte verdensstandarden for fysisk aktivitet.
+
+Ulrik løper
+Professor Ulrik Wisløff og hans forskerteam ved NTNU hadde jobbet i flere år med å utvikle PAI da verden ble introdusert for konseptet for første gang i Roma i 2016. (Foto: Berre kommunikasjonsbyrå)
+Mia Health + PAI 
+Vi spoler raskt fram til april 2023. Den nye Mia Health-appen er her. Det første du ser når du åpner den, er PAI-scoren din. Du registrerer at du har mistet noen PAI-poeng siden i går. Heldigvis har du tid til ei treningsøkt, og snart er PAI-scoren tilbake over 100.
+
+100 er nemlig det gylne tallet. Klarer du å holde deg over, er forskningen helt klar på at du øker sjansen for å slippe unna livsstilssykdommer og få en frisk alderdom og et langt liv. Det gjelder både for deg som har trent aktivt hele livet, og for deg som nettopp har kommet i gang med fysisk aktivitet. Når det er sagt, kommer du også et godt stykke på vei med 50 PAI.
+
+Vi skal straks se nærmere på denne forskningen, så skjønner du hvorfor vi kan være så skråsikre på at PAI funker for de aller fleste.
+
+Men la oss først ta det praktiske: Hvordan tjener du PAI? 
+
+Sjudagersvinduet 
+PAI baserer seg på all fysisk aktivitet du har gjort de siste sju dagene. En dag uten aktivitet gjør at du lagrer 0 PAI i banken. Er du aktiv med høy puls over lang tid, kan du oppnå hele 75 PAI på ei eneste treningsøkt.  
+
+Hver morgen mister du PAI-poengene du tjente samme dag i forrige uke. Er det for eksempel onsdag, forsvinner PAI-poengene fra sist onsdag. Hvis det innebærer at totalsummen synker under 100, bør du legge inn nok aktivitet til å ta igjen det tapte i løpet av dagen. 
+
+Merk deg at det er lettere å tjene PAI når du starter fra 0, enn når du allerede har en del PAI fra før. Algoritmen er laget slik fordi risikoen for livsstilssykdommer reduseres mest dersom man går fra å være helt inaktiv til å bli litt fysisk aktiv (1). Hvis du trener helt likt to dager på rad, vil du med andre ord få noen færre PAI-poeng på den andre treningsdagen enn på den første.
+
+Mia Health har gjort det enkelt å måle PAI for alle. Har du ei pulsklokke, går det faktisk helt av seg selv. Men du kan også få vite PAI-scoren din ved å loggføre treningsvanene dine manuelt i Mia Health-appen.
+
+mia-mann-pai
+Når Mia Health-appen registrerer at du har vært aktiv, oppdateres automatisk PAI-scoren din på forsida i appen. Hver morgen mister du poengene du tjente på samme dag for ei uke siden.
+Finn din PAI-puls 
+Når vi snakker så mye om puls og pulsklokker, er det fordi PAI-inntjeningen din styres av hvor hardt du belaster hjertet under aktiviteten. Du får PAI hver gang pulsen din øker over et visst nivå, og jo høyere puls, jo raskere kommer PAI-poengene.
+
+Grunnen til det er at trening med høy intensitet forbedrer hjertehelsa langt raskere (2) og forbindes med langt lavere framtidig helserisiko (1) enn aktiviteter med lavere puls. Hvor raskt akkurat du tjener PAI på en gitt pulsverdi, avhenger av din personlige pulsprofil og om du er kvinne eller mann.
+
+Tilpasset din form 
+Siden PAI styres av puls – og ikke av antall skritt du går eller meter du løper – vil en godt trent person måtte gjøre et langt større arbeid for å få 100 PAI enn en person som er helt utrent.
+
+Har du god kondisjon og løper med høy puls, kommer du selvsagt mye lenger på 30 minutter enn hvis du er nybegynner og løper like lenge med like høy puls. Men de 30 minuttene vil føles like slitsomme for dere begge. Og derfor blir PAI-poengene også omtrent like mange. 
+
+Slik er PAI tilpasset din fysiske form og din personlig profil. Det innebærer naturligvis også at du blir nødt til å gjøre mer for å nå 100 PAI etter hvert som du blir sprekere. For det vil du bli hvis du holder deg over 100 PAI de neste ukene og månedene (3).
+
+Mia-Dame-skyveøvelse
+PAI er et mål på helseeffekten av utholdenhetstreningen du gjør. All aktivitet som gjør at pulsen øker, gir PAI, og jo hardere du jobber ut fra ditt personlige utgangspunkt, jo flere poeng får du.
+Den forskningsbaserte aktivitetsstandarden
+Tilbake i Roma sprer ordet om PAI seg raskt. Forskningen til Ulrik Wisløff er solid, og hjerteleger er ikke i tvil: Dette kan være en game changer for å få flere motivert til fysisk aktivitet som virker. Senere samme år publiseres de første PAI-funnene i det anerkjente tidsskriftet The American Journal of Medicine (4).
+
+Bedre helse med 100 PAI 
+Forskningsartikkelen beskriver hvordan PAI-algoritmen ble utviklet fra puls- og helseinformasjon om 4500 nordmenn som deltok i NTNUs Kondisprosjekt mellom 2006 og 2008. 0 PAI betyr at man ikke er regelmessig fysisk aktiv. Jo mer aktiv man er, jo høyere er PAI-tallet.
+
+De første analysene viste at sannsynligheten for å ha mange risikofaktorer for livsstilssykdommer var lavere jo høyere PAI-score man hadde – men bare opp til et visst nivå. Dette nivået definerte forskerne som 100 PAI.
+
+Lever lenger med 100 PAI 
+Disse funnene var lovende, men i seg selv ikke godt nok bevis på at 100 PAI er bra for helsa. Derfor gikk forskerne tilbake til 1980-tallet og beregnet PAI-verdier for nesten 40 000 personer som hadde rapportert aktivitetsvanene sine i en av verdens mest omfattende helseundersøkelser.
+
+Nesten 16 000 rapporterte å være inaktive og fikk dermed 0 PAI. Ca. 8000 trente nok til å få 100 PAI eller mer. Resten lå et sted mellom 0 og 100.
+
+Da Wisløff og kollegene undersøkte hvordan det hadde gått med disse personene 30 år senere, viste det seg at de som tjente 100 PAI eller mer, levde i snitt fem år lenger enn de som tjente mindre enn 100 PAI (4).
+
+Menn som hadde 100 PAI eller mer, hadde dessuten 29 % lavere risiko for å dø av hjerte- og karsykdom enn like gamle, inaktive menn. For kvinner var forskjellen 38 %. Disse forskjellene kunne ikke fullt ut forklares av at aktive kvinner og menn også røyket mindre, var slankere, hadde lavere blodtrykk og høyere utdanning (4).
+
+Dermed tyder alt på at det er den fysiske aktiviteten – en PAI-score på 100 eller mer – som reduserer sykdomsrisikoen og forlenger livet.
+
+telefon-alder-glad
+Med 100 PAI i Mia Health-appen legger man til rette for en sunn og lykkelig alderdom med god helse.
+Friskere hjerne med 100 PAI
+Senere har det blitt publisert forskningsartikler om PAI på løpende bånd, og resultatene er entydige. Minst 100 PAI er optimalt for personer som røyker, for personer med høyt blodtrykk, for personer med type 2-diabetes og for overvektige (4). Til og med for personer som har hatt hjerteinfarkt eller hjerneslag, er 100 PAI i uka forbundet med økt levealder (5).
+
+Totalt sett har PAI blitt beregnet for mer enn 70 000 nordmenn som har deltatt i en eller flere helseundersøkelser fra 1980-tallet og fram til i dag.
+
+I flere av artiklene ser forskerne på hva som skjer hvis man opprettholder eller endrer aktivitetsnivå over tid. Dette kan gi enda tydeligere svar på effekten av PAI enn det man får ved å vurdere PAI-scoren på ett enkelt tidspunkt.
+
+Den første av disse artiklene viste at personer som tjente 100 PAI eller mer både på 1980- og 1990-tallet, i snitt levde hele åtte år lenger enn de som tjente færre PAI (6). Den neste viste at det ikke bare er hjertet som har godt av PAI-poengene: Risikoen for å få demens de neste 25 årene var nemlig vesentlig lavere for dem som opprettholdt et PAI-nivå på 100 eller mer over flere år (7). Og risikoen for å dø av eller med demens var nesten halvert sammenlignet med for inaktive deltakere.
+
+Aldri for seint
+Men forskerne ønsket ikke bare å se på helsegevinsten for de som sannsynligvis hadde vært aktive gjennom store deler av livet. Et like interessant spørsmål var om hva som skjer med helsa for dem som tidligere har vært inaktive, men som klarer å øke aktivitetsnivået sitt med årene.
+
+Og det de fant, sender et helt tydelig signal om at det aldri er for seint å begynne å samle PAI-poeng. Deltakere som hadde økt aktivitetsnivået fra under til over 100 PAI mellom de to helseundersøkelsene, kunne forvente flere ekstra leveår (6) og betydelig redusert risiko for å dø av både hjerte- og karsykdom (6) og demens (7).
+
+Det gjaldt også for grupper som er spesielt utsatt for disse sykdommene i utgangspunktet, nærmere bestemt personer med høyt blodtrykk, overvektige og røykere (7).
+
+mia-eldre-mann-kettlebell
+Mer en én million mennesker har bidratt i forskningen som kobler 100 PAI til et friskere hjerte, en friskere hjerne og en generelt friskere kropp. 
+PAI for alle
+Vi kan selvsagt ikke tallfeste hvor mange ekstra år med god helse akkurat du får hvis du bruker Mia Health-appen og holder deg over 100 PAI resten av livet. Men vi kan slå fast at få eller ingen andre lignende aktivitetsstandarder har like solid forankring i førsteklasses forskning som PAI.  
+
+Resultatene fra de norske studiene er nemlig også bekreftet i flere amerikanske og asiatiske undersøkelser. Blant mer enn 50 000 amerikanere og nesten en halv million kinesere fant forskerne 15–30 % redusert risiko for tidlig død og hjerteinfarkt eller annen hjerte- og karsykdom hos de som oppnådde 100 PAI i uka eller mer (8, 9, 10).  
+
+Og amerikanerne som opprettholdt 100 PAI over tid, hadde halvert risiko for å dø av hjerte- og karsykdom sammenlignet med de som var inaktive (11).
+
+PAI mot vektøkning 
+God kondisjon er en av de aller viktigste faktorene for å ha god helse i dag og i framtida (12, 13). Da er det greit å vite at menn og kvinner som oppnår 100 PAI i uka, har betydelig bedre kondisjon enn de som er mindre aktive. Å tjene mellom 100 og 150 PAI hver uke ser ut til å sikre at man har minst gjennomsnittlig kondisjon for sitt kjønn og sin alder (3). 
+
+PAI kan også være et nyttig verktøy for å motvirke helseskadelig vektøkning. Friske kvinner og menn som er fysisk aktive nok til å oppnå minst 100 PAI hver uke over flere tiår, går mindre opp i vekt enn personer som er inaktive. Det samme gjelder tidligere inaktive personer som øker aktivitetsnivået sitt opp til 100 PAI (14).
+
+100 PAI gir rom for ekstra sofatid
+To andre PAI-studier viser at personer som trener nok til å holde seg over 100 PAI, kan sitte mye stille med god samvittighet. Den ene, en enorm studie med 450 000 deltakere fra Taiwan, viser at personer med langvarig stillesittende arbeid har økt helserisiko, men bare dersom de ikke klarer å oppnå 100 PAI (15).
+
+Og norske menn og kvinner som sitter mye i ro, men likevel oppnår 100 PAI i uka, har ikke økt opphopning av risikofaktorer for hjerte- og karsykdom (16), i motsetning til de som sitter mye stille uten å klare 100 PAI. Slike risikofaktorer kan være fedme, høyt blodtrykk, høyt blodsukker og usunne kolesterolnivåer i blodet.
+
+Så lenge treningen du gjennomfører er av det effektive slaget, trenger du altså ikke bekymre deg for tida du tilbringer i godstolen.
+
+Bedre søvn og livskvalitet 
+Noen av dere har kanskje observert at vi foreløpig kun har skrevet om sammenhenger mellom PAI, helse og levetid – såkalte observasjonsstudier. Dette er svært solide forskningsstudier og den vanlige måte å lete etter langsiktige helseeffekter av fysisk aktivitet. 
+
+Men dette studiedesignet har én viktig begrensning: Man kan aldri hevde sikre årsakssammenhenger fra observasjonsstudier. Med andre ord: Studiene kan ikke garantere at det er den fysiske aktiviteten og de 100 PAI-poengene som gjør at noen lever lengre og friskere liv enn andre.
+
+Heldigvis har det så smått også begynt å komme resultater fra studier der man bruker PAI aktivt for å se etter sikre helseeffekter – randomiserte, kontrollerte studier. Disse resultatene forsterker bare optimismen om at PAI er et motiverende og helsefremmende verktøy.
+
+Ta for eksempel en australsk studie som undersøkte effekten av å bruke PAI for personer med type 2-diabetes. Deltakerne som hadde som mål å tjene 100 PAI, fikk økt fysisk kapasitet, bedre søvn, lavere fettprosent og bedre helserelatert livskvalitet. Deltakerne i kontrollgruppa oppnådde ingen av disse helseeffektene (17).
+
+Mia-Mann-Dame-HighFive
+Allerede etter få måneder med PAI opplever mange økt livskvalitet, sunnere kroppskomposisjon og bedre fysisk og psykisk helse.
+Motivasjonsboost 
+I samme studie sa hele 80 % at PAI motiverte dem og at de ønsket å fortsette å bruke PAI etter at studien var over (17).
+
+En annen studie fra samme forskningsgruppe viser lignende resultater for personer som har hatt hjerteinfarkt. Deltakere i denne studien brukte PAI i seks uker, men fikk kun se sin egen PAI-score de tre siste av disse ukene. Illustrerende nok økte aktivitetsnivået til pasientene markant disse siste tre ukene, et klart signal om at PAI er en sterk motivasjonsfaktor til å være fysisk aktiv (18).
+
+Også en studie fra USA tyder på at PAI blir brukt, motiverer og bidrar til økt aktivitetsnivå for personer som har økt risiko for hjerte- og karsykdom. I studien fikk 25 pasienter utdelt ei pulsklokke og en app som måler PAI, og de ble bedt om å trene variert slik at pulsen økte og PAI-scoren holdt seg over 100 de neste 12 ukene.
+
+Nesten alle fullførte studien og opprettholdt en gjennomsnittsscore på 116 PAI gjennom perioden. Pasientene rapporterte både at de var mer fysisk aktive og satt mindre i ro enn før de ble med i studien. Over 80 % var fornøyde med PAI (19).
+
+Mest aktive med PAI
+De kanskje mest overbevisende funnene om at PAI motiverer, kommer likevel fra Norge. 183 inaktive kvinner og menn ble tilfeldig plassert i tre grupper og fulgt i ett og et halvt år. Alle gruppene fikk en pulsmåler og mulighet til å måle PAI. To av gruppene fikk i tillegg mulighet til å delta på regelmessige digitale gruppetimer med instruktør, og ei av disse gruppene kunne dessuten spørre om råd og støtte til aktivitet på studiens egen Facebook-gruppe.
+
+Da resultatene ble klare, var PAI det eneste som hadde motivert deltakerne til å bli mer fysisk aktive. Svært få deltok på den nettbaserte treningen, mens de som brukte Facebook-gruppa aktivt, ikke fikk ekstra motivasjon av det (20). 
+
+I dag bruker forskere over hele verden PAI og Mia Health i sine forskningsprosjekter. Dermed kan vi forvente mange flere resultater i årene framover. I Mia Health-appen vil vi alltid holde deg oppdatert om de siste forskningsfunnene. 
+
+Derfor bør du også velge PAI 
+Hvis du fortsatt ikke er 100 % overbevist om at PAI er noe for deg, kan vi legge enda flere gode argumenter i potten. La oss for eksempel gjøre en sammenligning med noen andre populære aktivitetsanbefalinger som visstnok skal gjøre underverker for helsa.
+
+PAI teller all aktivitet 
+Tidligere har du kanskje blitt fortalt at du bør gå 10 000 skritt hver dag? Det kan være en flott anbefaling for noen. Men for langt flere vil det være en fullstendig meningsløs anbefaling. 
+
+PAI er nemlig ikke bare for deg som liker å løpe eller gå. PAI er også for deg som foretrekker å sykle til og fra jobb hver dag. For deg som elsker å svømme 20 lengder før arbeidstid. Og for deg som har et dårlig kne og trener intervaller på romaskin tre dager i uka.  
+
+Du trenger ikke å gå ett eneste skritt for å oppnå 100 PAI, for all fysisk aktivitet er bra for helsa.
+
+mia-gruppe-spinning
+0 skritt, men mange PAI. Spinning er selvsagt bra for helsa, selv om det ikke gir resultater på skrittelleren.
+PAI lar deg ta hviledager 
+Mange av de vanligste aktivitetsanbefalingene forutsetter at du er fysisk aktiv hver eneste dag. Det gjelder både anbefalingen om 10 000 skritt og anbefalingen som ber deg være aktiv i minst 30 minutter hver dag.
+
+Slike råd har to store problemer. For det første krever de at du kan sette av mye tid til fysisk aktivitet. Daglig fysisk aktivitet kan være en uoverkommelig flaskehals for mange, og vi vet at mangel på tid er den vanligst rapporterte årsaken til at folk ikke er regelmessig fysisk aktiv (21).
+
+Med PAI kan du slippe unna med mindre aktivitet hver uke hvis aktiviteten gjør at du blir ordentlig svett og andpusten. To kvalitetsøkter på 40 minutter kan faktisk være nok til å få 100 PAI.
+
+Rent praktisk betyr det at du ikke trenger å trene mer den uka for helsas skyld. Ypperlig for deg som har det travelt nok med å få hverdagen til å gå opp og ikke har tid til å være aktiv hver eneste dag.
+
+PAI registrerer effekten for deg 
+Et annet stort problem er at andre anbefalinger ikke tar høyde for intensiteten på aktiviteten du gjør. Det er for eksempel enormt stor forskjell på effekten av 10 000 rolige skritt og 10 000 skritt med høy puls.
+
+Dagens offisielle anbefalinger for fysisk aktivitet sier at du bør være fysisk aktiv med «moderat intensitet» i minst 150 minutter hver uke eller med «høy intensitet» i minst 75 minutter hver uke, eller minst dobbelt så mye hvis du har en stillesittende hverdag (22).
+
+Dette er isolert sett gode anbefalinger med solid forskningsforankring, men det er ikke alltid så lett å vite hva som skal regnes som «moderat» og «høy» treningsintensitet.
+
+Hvis du bruker PAI, slipper du å tenke på hvilken intensitet du trener med. Pulsklokka styrer det for deg og beregner automatisk PAI-score basert på hvor intensivt du har trent ut fra dine egne forutsetninger.
+
+mia-mann-situps-puls
+Med ei pulsklokke på håndleddet eller et pulsbelte rundt brystet har du alt du trenger for å måle PAI automatisk – og du slipper å lure på hvor bra aktiviteten du nettopp har gjort, er for helsa di.
+PAI betyr valgfrihet 
+Som sagt kan du oppnå 100 PAI med to treningsdager hver uke. Men kanskje du er en av dem som liker å ta det roligere når du trener? Hvis du har god tid til å være fysisk aktiv i hverdagen, kan du velge å tjene flesteparten av PAI-poengene dine med moderat aktivitet. Du kan selvsagt også kombinere harde og roligere økter.
+
+Hvis du kjenner at 100 PAI ikke er et oppnåelig mål for deg per i dag, er det ingen ting i veien for å starte litt roligere. De første ukene og månedene kan 50 PAI være en god målsetting. Forskningen viser nemlig at 50 PAI er nok til å oppnå en god del av helsegevinstene man får ved 100 PAI (4). 
+
+Har du lyst til å trene mer, er det selvsagt heller ingen ting i veien for det. Forskningen tyder likevel på at du har tatt ut mesteparten av helseeffekten i det du runder 100 PAI (4). Du vil nok komme enda raskere i form dersom du oppnår 150 eller 200 PAI i uka, men selv om du nøyer deg med 100 PAI hver uke, vil kondisjonen fortsette å øke sakte, men sikkert i lang tid (3).
+
+PAI er for akkurat deg 
+Slik er PAI tilpasset hver enkelt. Med PAI står valgfriheten i sentrum. Hvis man er fysisk aktiv på den måten man selv liker best, er sjansen langt større for at man finner motivasjon til å være aktiv resten av livet.  
+
+I Roma i 2016 hadde Ulrik Wisløff en visjon om å etablere en ny verdensstandard for fysisk aktivitet. Pulsslag for pulsslag nærmer han seg målet.
+
+Og så lenge Ulrik Wisløff fortsatt forsker på trening og helse, kan vi love deg at Mia Health gir deg de mest treffsikre og troverdige verktøyene for at også du finner motivasjon og glede i effektiv fysisk aktivitet som styrker hjertet, hjernen, kondisjonen og helsa.

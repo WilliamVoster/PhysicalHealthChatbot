@@ -1,0 +1,87 @@
+Mia Health introduces AQ from NTNU
+Most of us know IQ as a measure of intelligence. In collaboration with NTNU, we now present AQ, a completely new way to measure physical activity.
+
+AQ_01
+Does the description of AQ remind you of PAI? Read on and you'll soon realize that AQ trumps PAI in all areas!
+
+Larger health effects
+On April 4, the Norwegian Directorate of Health held a press conference. They presented their new report on physical activity and health effects (1). An all-star team of researchers had helped to analyze the activity levels of 32 million people from around the world. The most important results can be briefly summarized in two points that most people already know:
+
+All physical activity is good for your health. The greatest health benefits are achieved by those who are completely inactive and start to move a little more than before.
+The more active you are, at least up to a certain level, the better it is for your health.
+What is primarily new is that the documented health effect of physical activity is even greater than what has been shown in previous calculations. The reason is obvious: The more data you have available, the more reliable estimates you can make.
+In the new calculations, the Directorate of Health has the same amount of data as if they had followed the entire Norwegian population for 30 years.
+
+So on April 4, they were able to tell us with great certainty that people who are "extra physically active" throughout much of their lives, ... :
+
+... have a 73% lower risk of dying earlier than expected, compared to people who are physically inactive for most of their lives.
+... on average live 6.5 years longer and have 13 more healthy years of life than inactive people.
+More refined activity advice
+In Australia, the workday was already over when the Directorate of Health presented its report. But Professor Ulrik Wisløff, head of the Cardiac Exercise Research Group (CERG) at the Norwegian University of Science and Technology (NTNU), was still at work. He nodded approvingly at the new figures.
+
+Of course, he was already familiar with the results. He is, after all, one of the world's most influential persons in the field of physical activity and health. His longtime colleague and deputy head of CERG, Professor Dorthe Stensvold, was also part of the expert group that worked with the Norwegian Directorate of Health on the new report.
+
+But for Ulrik, the timing could not have been better. Because it's not just the Norwegian Directorate of Health that has gained more research data on which to base its estimates over the past decade.
+
+So have Ulrik and CERG.
+
+Professor Wisløff, the man behind the Fitness Calculator and PAI, has spent part of his research stay in Australia over the past year preparing NTNU's next innovation. And once again, he'll have Mia Health on his team.
+
+With a larger research base, we can give even more refined advice on how physically active we should be to take the best possible care of our own health. The Norwegian Directorate of Health defines it as "extra physically active". Ulrik - and Mia Health - define it as 100 AQ.
+
+AQ_02
+Intelligent researchers have used advanced statistical methods and vast amounts of data to find more precise correlations between physical activity and health than ever before.
+
+From PAI to AQ
+It's been eight years since Ulrik launched PAI, the algorithm that extends and simplifies life. PAI has been a success story - with millions of users from all over the world. But perhaps the greatest hallmark of Ulrik's research career is the drive to make things even better.
+
+From 5000 to one million
+In the years since 2016, a lot has happened. When Ulrik and NTNU estimated 100 PAI to be the optimal amount of exercise, the starting point was data from less than 5,000 people in Trøndelag county, Norway (2). In the grand scheme of things, that's not very many.
+
+And although 100 PAI has subsequently been confirmed as a very good measure of recommended activity levels in a number of studies with hundreds of thousands of participants (3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13), none of this research has challenged the hypothesis that PAI is the absolutely optimal measure of physical activity levels.
+
+This is precisely what Ulrik has now done. AQ thinks 5000 people in Trøndelag are too few. AQ is based on data from more than a million men and women from all over the world, including Norway, the USA, Australia, China and Taiwan.
+
+From questionnaires to heart rate monitors
+But AQ isn't just based on information from more people than PAI. The Trøndelag measures of physical activity level and exercise intensity have been supplemented with other ways of collecting data in other populations. The foundation of the new algorithm thus consists of several levels of activity data. More data points provide a more complete algorithm with fewer sources of inaccuracy.
+
+And where the PAI algorithm was based solely on data from questionnaires where people answered how active they usually are, AQ benefits from the fact that continuous heart rate measurements have now been collected from large population groups over several years.
+
+The amount of activity people report is not always the same as the actual activity they carry out. For example, it has been shown that most people spend much more time in low-intensity activity than they report when answering questionnaires. Objective activity data from smartwatches gives researchers a much better basis for making precise calculations of the actual activity level of everyone who has responded to questionnaires.
+
+AQ > PAI
+The first AQ research is already done, and Ulrik and his CERG colleagues are now working on the first research paper on AQ. Among other things, it compares the health benefits of 100 PAI with the health benefits of 100 AQ. We're not allowed to reveal everything until the research is published, but you don't need to be a fortune teller to understand the main conclusion:
+
+100 PAI is good for your health. But 100 AQ is even better.
+
+A more user-friendly algorithm
+It's Ulrik Wisløff, CERG and NTNU who give us AQ and the research behind it, but at Mia Health we're proud to say that this algorithm is ours, too.
+
+The years with PAI have taught us a lot. The algorithm has obvious strengths, but also some weaknesses when it comes to usability. Over the past year, we at Mia Health have received several thousand inquiries from you who use our app. And at Mia Health, we take our users seriously.
+
+So when Ulrik came to us with his new formula, we provided input on how to best implement the algorithm in the Mia Health app.
+
+It will still be the sum of the endurance training you do each week that makes up your total AQ. It will still be your very specific heart rate profile that determines how high your AQ is. Like PAI, AQ will still meet you at your level and drag you slowly but surely towards better fitness, based on your personal data. And we still set 100 as the minimum target to achieve the maximum health effect.
+
+With AQ, however, we make it easier to understand how to get to 100. For example, the sum of all the AQ you've earned in the last seven days will always equal your total AQ in the Mia Health app. This is not the case with PAI. And while you're earning AQ, our app will update you with answers to any questions that come up along the way.
+
+AQ_03
+AQ is intelligent, and AQ is user-friendly. NTNU and Mia Health have listened to your input in the work of bringing the new algorithm into the Mia Health app.
+
+AQ in September
+Now, we bet some of you are wondering what is the difference between PAI and AQ in practice. Will it be harder or easier to achieve 100 AQ than it has been to achieve 100 PAI?
+
+But it's impossible for us to know the answer to that, because it depends entirely on you and your activity patterns. In developing AQ, Ulrik Wisløff discovered that PAI has rewarded some activity routines more than they deserve, while other types of exercise habits have been rewarded with too few points.
+
+New NTNU flagship
+AQ corrects these imbalances. Those of you who have established good exercise routines may not notice much difference in how much it takes. Others may be in for a bit of a surprise.
+
+You'll get the answer from September 2024, when you can start measuring your AQ with Mia Health. And once the algorithm is in place in the app, we'll follow up with a new blog post giving you in-depth details on how to earn your AQ.
+
+You'll recognize a lot from your time with PAI. But some of it will also be different.
+
+When the Mia Health app launched in April 2023, we were proud to bring you PAI, the most accurate measure available of the health impact of your physical activity. PAI has motivated a huge number of people around the world to become more physically active - and will always be an important part of NTNU's and Mia Health's history.
+
+But now we have AQ. And AQ is not PAI. AQ is more accurate than PAI. AQ is more user-friendly than PAI. Simply put, AQ is NTNU's new flagship for the objective measurement of physical activity and the health effects of the activity you do.
+
+And AQ can only be measured with Mia Health.

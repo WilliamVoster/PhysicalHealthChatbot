@@ -1,0 +1,197 @@
+PAI – physical activity that makes life easier 
+
+Please note! From September 2024, PAI will be replaced by AQ, an even better and more research-based measure of the health effects of your activity. Click here to read more about AQ, NTNU's new flagship for measuring physical activity.
+
+
+12, 87 or 119? 
+The PAI score in the Mia Health app is not just a number. It is the only number you need to know if you are active enough to take care of your own health. This is the story of how PAI came to be, and why we know that PAI can help you specifically live a longer and healthier life. We start in Rome, in August 2016. At the world's largest congress for heart researchers. More than 30,000 professionals are gathered to get updated on the very latest. A very few of them have been handpicked to tell curious journalists about their latest research discoveries. One of the few selected is Ulrik Wisløff. The NTNU professor who for decades has pushed boundaries with groundbreaking research on the health effects of exercise. Now he has found the recipe that trumps everything he has recommended before. In Rome, the research behind the algorithm that prolongs and simplifies life is presented to the world for the first time: PAI – Personal Activity Intelligence, the new research-based world standard for physical activity.
+
+
+
+
+
+Ulrik is running 
+Professor Ulrik Wisløff and his research team at NTNU had been working for several years on developing PAI when the world was introduced to the concept for the first time in Rome in 2016. (Photo: Berre kommunikasjonsbyrå) 
+
+Mia Health + PAI 
+We fast forward to April 2023. The new Mia Health app is here. The first thing you see when you open it is your PAI score. You notice that you have lost some PAI points since yesterday. Fortunately, you have time for a workout, and soon your PAI score is back above 100.
+
+
+
+
+100 is the golden number. If you manage to stay above 100, research is clear that you increase your chances of avoiding lifestyle diseases and getting a healthy old age and a long life. This applies to both those who have trained actively all their lives, and those who have just started with physical activity. That being said, you also get quite far with 50 PAI. We will soon take a closer look at this research, so you understand why we can be so confident that PAI works for most people. But first, let's look at the practical aspects: How do you earn PAI? 
+
+
+
+
+
+The seven-day window 
+PAI is based on all physical activity you have done in the last seven days. A day without activity means you store 0 PAI in the bank. If you are active with a high heart rate for a long time, you can achieve as much as 75 PAI in a single workout. Every morning you lose the PAI points you earned on the same day last week. For example, if it's Wednesday, the PAI points from last Wednesday disappear. If this means that the total sum drops below 100, you should include enough activity to make up for the loss during the day. Note that it is easier to earn PAI when you start from 0 than when you already have some PAI. The algorithm is designed this way because the risk of lifestyle diseases is reduced most if you go from being completely inactive to being somewhat physically active (1). In other words, if you train exactly the same way two days in a row, you will get fewer PAI points on the second training day than on the first.
+
+
+
+
+
+Mia Health has made it easy to measure PAI for everyone. If you have a heart rate monitor, it actually happens automatically. But you can also find out your PAI score by manually logging your training habits in the Mia Health app.
+
+
+
+mia-man-pai 
+When the Mia Health app registers that you have been active, your PAI score on the app's home page is automatically updated. Every morning you lose the points you earned on the same day a week ago.
+
+
+Find your PAI pulse 
+When we talk so much about heart rate and heart rate monitors, it is because your PAI earnings are controlled by how hard you stress your heart during activity. You get PAI every time your heart rate increases above a certain level, and the higher your heart rate, the faster the PAI points come. The reason for this is that high-intensity exercise improves heart health much faster (2)  and is associated with a much lower future health risk (1) than lower heart rate activities. How quickly you earn PAI at a given heart rate value depends on your personal heart rate profile and whether you are a woman or a man.
+
+
+
+
+Adapted to your fitness 
+Since PAI is controlled by heart rate – and not by the number of steps you walk or meters you run – a well-trained person will have to do much more work to get 100 PAI than a person who is completely untrained. If you have good fitness and run with a high heart rate, you will, of course, go much further in 30 minutes than if you are a beginner and run for the same amount of time with the same high heart rate. But those 30 minutes will feel equally strenuous for both of you. And therefore, the PAI points will also be approximately the same. This is how PAI is adapted to your physical fitness and your personal profile. This naturally also means that you will have to do more to reach 100 PAI as you get fitter. Because you will get fitter if you stay above 100 PAI in the coming weeks and months (3).
+
+
+
+
+
+Mia-Woman-sliding-exercise 
+PAI is a measure of the health effect of the endurance training you do. All activity that increases your heart rate gives PAI, and the harder you work from your personal starting point, the more points you get.
+
+
+The research-based activity standard 
+Back in Rome, word about PAI spreads quickly. Ulrik Wisløff's research is solid, and cardiologists have no doubt: This can be a game-changer to motivate more people to effective physical activity. Later that same year, the first PAI findings are published in the reputable journal The American Journal of Medicine (4).
+
+
+
+Better health with 100 PAI 
+The research article describes how the PAI algorithm was developed from heart rate and health information from 4,500 Norwegians who participated in NTNU's Kondisprosjekt between 2006 and 2008. 0 PAI means that one is not regularly physically active. The more active one is, the higher the PAI number.
+
+
+The first analyses showed that the probability of having many risk factors for lifestyle diseases was lower the higher the PAI score one had – but only up to a certain level. This level was defined by the researchers as 100 PAI.
+
+
+Live longer with 100 PAI 
+These findings were promising, but in themselves not sufficient proof that 100 PAI is good for health. Therefore, the researchers went back to the 1980s and calculated PAI values for almost 40,000 people who had reported their activity habits in one of the world's most comprehensive health surveys. Almost 16,000 reported being inactive and thus received 0 PAI. Approx. 8,000 trained enough to get 100 PAI or more. The rest were somewhere between 0 and 100.
+
+
+
+
+When Wisløff and his colleagues investigated what had happened to these people 30 years later, it turned out that those who earned 100 PAI or more lived on average five years longer than those who earned less than 100 PAI (4). Men who had 100 PAI or more also had a 29% lower risk of dying from cardiovascular disease than inactive men of the same age. For women, the difference was 38%. These differences could not be fully explained by the fact that active women and men also smoked less, were leaner, had lower blood pressure, and higher education (4). Thus, everything indicates that it is physical activity – a PAI score of 100 or more – that reduces the risk of disease and prolongs life.
+
+
+
+
+telephone-age-happy 
+With 100 PAI in the Mia Health app, you pave the way for a healthy and happy old age with good health.
+
+Healthier brain with 100 PAI 
+Later, research articles on PAI have been published continuously, and the results are unequivocal. At least 100 PAI is optimal for people who smoke, for people with high blood pressure, for people with type 2 diabetes, and for overweight people (4). Even for people who have had a heart attack or stroke, 100 PAI per week is associated with increased life expectancy (5). In total, PAI has been calculated for more than 70,000 Norwegians who have participated in one or more health surveys from the 1980s until today. In several of the articles, researchers look at what happens if one maintains or changes activity level over time. This can provide even clearer answers to the effect of PAI than what one gets by evaluating the PAI score at a single point in time. The first of these articles showed that people who earned 100 PAI or more in both the 1980s and 1990s, on average lived a full eight years longer than those who earned fewer PAI (6). The next showed that it is not only the heart that benefits from PAI points: The risk of developing dementia in the next 25 years was significantly lower for those who maintained a PAI level of 100 or more over several years (7). And the risk of dying from or with dementia was almost halved compared to inactive participants.
+
+
+
+
+
+Never too late 
+But the researchers did not only want to look at the health benefits for those who had likely been active throughout much of their lives. An equally interesting question was what happens to the health of those who have previously been inactive but manage to increase their activity level over the years. And what they found sends a very clear signal that it is never too late to start collecting PAI points. Participants who had increased their activity level from below to above 100 PAI between the two health surveys could expect several extra years of life (6)  and significantly reduced risk of dying from both cardiovascular disease (6)  and dementia (7). This also applied to groups that are particularly susceptible to these diseases in the first place, specifically people with high blood pressure, overweight people, and smokers (7).
+
+
+
+
+
+mia-elderly-man-kettlebell 
+More than one million people have contributed to the research that links 100 PAI to a healthier heart, a healthier brain, and a generally healthier body.
+
+PAI for everyone 
+We cannot, of course, quantify how many extra years of good health you will get if you use the Mia Health app and stay above 100 PAI for the rest of your life. But we can state that few or no other similar activity standards have as solid a foundation in first-class research as PAI. The results from the Norwegian studies have also been confirmed in several American and Asian surveys. Among more than 50,000 Americans and almost half a million Chinese, researchers found a 15–30% reduced risk of early death and heart attack or other cardiovascular disease in those who achieved 100 PAI per week or more (8, 9, 10). And Americans who maintained 100 PAI over time had a halved risk of dying from cardiovascular disease compared to those who were inactive (11).
+
+
+
+
+
+PAI against weight gain 
+Good fitness is one of the most important factors for good health today and in the future (12, 13). It is good to know that men and women who achieve 100 PAI per week have significantly better fitness than those who are less active. Earning between 100 and 150 PAI each week seems to ensure that you have at least average fitness for your gender and age (3). PAI can also be a useful tool to counteract unhealthy weight gain. Healthy women and men who are physically active enough to achieve at least 100 PAI each week over several decades gain less weight than inactive people. The same applies to previously inactive people who increase their activity level up to 100 PAI (14).
+
+
+
+
+
+100 PAI allows for extra sofa time 
+Two other PAI studies show that people who exercise enough to stay above 100 PAI can sit still for a long time with a good conscience. One, a huge study with 450,000 participants from Taiwan, shows that people with long-term sedentary work have an increased health risk, but only if they do not manage to achieve 100 PAI (15). And Norwegian men and women who sit a lot, but still achieve 100 PAI per week, do not have an increased accumulation of risk factors for cardiovascular disease (16), unlike those who sit a lot without managing 100 PAI. Such risk factors can include obesity, high blood pressure, high blood sugar, and unhealthy cholesterol levels in the blood. As long as the training you do is effective, you don't have to worry about the time you spend in your armchair.
+
+
+
+
+
+Better sleep and quality of life 
+Some of you may have observed that we have so far only written about relationships between PAI, health and longevity – so-called observational studies. These are very solid research studies and the usual way to look for long-term health effects of physical activity. But this study design has one important limitation: one can never claim definite causal relationships from observational studies. In other words: The studies cannot guarantee that it is physical activity and 100 PAI points that make some people live longer and healthier lives than others. Fortunately, results have slowly started to emerge from studies where PAI is actively used to look for definite health effects – randomized, controlled studies. These results only reinforce the optimism that PAI is a motivating and health-promoting tool. Take, for example, an Australian study that investigated the effect of using PAI for people with type 2 diabetes. Participants who aimed to earn 100 PAI gained increased physical capacity, better sleep, lower body fat percentage, and better health-related quality of life. Participants in the control group achieved none of these health effects (17).
+
+
+
+
+
+Mia-Man-Woman-HighFive 
+Already after a few months with PAI, many experience increased quality of life, healthier body composition, and better physical and mental health.
+
+Motivation boost 
+In the same study, as many as 80% said that PAI motivated them and that they wanted to continue using PAI after the study was over (17). Another study from the same research group shows similar results for people who have had a heart attack. Participants in this study used PAI for six weeks, but only saw their own PAI score for the last three of these weeks. Illustratively, the activity level of the patients increased significantly during these last three weeks, a clear signal that PAI is a strong motivating factor for physical activity (18). A study from the USA also suggests that PAI is used, motivates, and contributes to increased activity levels for people who have an increased risk of cardiovascular disease. In the study, 25 patients were given a heart rate monitor and an app that measures PAI, and they were asked to exercise variedly so that their heart rate increased and their PAI score stayed above 100 for the next 12 weeks. Almost all completed the study and maintained an average score of 116 PAI throughout the period. The patients reported that they were both more physically active and sat less still than before they joined the study. Over 80% were satisfied with PAI (19).
+
+
+
+
+
+Most active with PAI 
+Perhaps the most convincing findings that PAI motivates, however, come from Norway. 183 inactive women and men were randomly placed in three groups and followed for one and a half years. All groups received a heart rate monitor and the opportunity to measure PAI. Two of the groups also had the opportunity to participate in regular digital group classes with an instructor, and one of these groups could also ask for advice and support for activity on the study's own Facebook group. When the results were clear, PAI was the only thing that had motivated the participants to become more physically active. Very few participated in the online training, while those who actively used the Facebook group did not get extra motivation from it (20). Today, researchers all over the world use PAI and Mia Health in their research projects. Thus, we can expect many more results in the years to come. In the Mia Health app, we will always keep you updated on the latest research findings.
+
+
+
+
+
+That's why you should also choose PAI 
+If you are still not 100% convinced that PAI is for you, we can add even more good arguments to the pot. Let's, for example, make a comparison with some other popular activity recommendations that are supposedly wonders for health.
+
+
+PAI counts all activity 
+In the past, you may have been told that you should walk 10,000 steps every day?  That can be a great recommendation for some. But for far more, it will be a completely meaningless recommendation. PAI is not just for those who like to run or walk. PAI is also for those who prefer to cycle to and from work every day. For those who love to swim 20 lengths before work. And for those who have a bad knee and train intervals on a rowing machine three days a week. You don't have to walk a single step to achieve 100 PAI, because all physical activity is good for your health.
+
+
+
+
+
+mia-group-spinning 
+0 steps, but many PAI. Spinning is, of course, good for your health, even if it doesn't show up on the pedometer.
+
+PAI allows you to take rest days 
+Many of the most common activity recommendations assume that you are physically active every single day. This applies to both the recommendation of 10,000 steps and the recommendation that asks you to be active for at least 30 minutes every day. Such advice has two major problems. Firstly, they require you to dedicate a lot of time to physical activity. Daily physical activity can be an insurmountable bottleneck for many, and we know that lack of time is the most commonly reported reason why people are not regularly physically active (21). With PAI, you can get away with less activity each week if the activity makes you properly sweaty and out of breath. Two quality sessions of 40 minutes can actually be enough to get 100 PAI. Practically, this means you don't need to train more that week for your health. Excellent for those who are busy enough to make everyday life work and don't have time to be active every single day.
+
+
+
+
+
+PAI registers the effect for you 
+Another big problem is that other recommendations do not take into account the intensity of the activity you do. For example, there is an enormous difference in the effect of 10,000 leisurely steps and 10,000 steps with a high heart rate. Today's official recommendations for physical activity state that you should be physically active with "moderate intensity" for at least 150 minutes per week or with "high intensity" for at least 75 minutes per week, or at least twice as much if you have a sedentary lifestyle (22). These are, in themselves, good recommendations with solid research backing, but it is not always easy to know what counts as "moderate" and "high" training intensity. If you use PAI, you don't have to think about what intensity you are training at. Your heart rate monitor controls it for you and automatically calculates your PAI score based on how intensely you have trained based on your own conditions.
+
+
+
+
+
+mia-man-situps-pulse 
+With a heart rate monitor on your wrist or a heart rate belt around your chest, you have everything you need to measure PAI automatically – and you don't have to wonder how good the activity you just did is for your health.
+
+PAI means freedom of choice 
+As mentioned, you can achieve 100 PAI with two training days each week. But perhaps you are one of those who like to take it easier when you exercise?  If you have plenty of time to be physically active in everyday life, you can choose to earn most of your PAI points with moderate activity. You can, of course, also combine hard and easier sessions.
+
+
+
+
+If you feel that 100 PAI is not an achievable goal for you today, there is nothing wrong with starting a little slower. For the first few weeks and months, 50 PAI can be a good goal. Research shows that 50 PAI is enough to achieve a good portion of the health benefits you get from 100 PAI (4). If you want to train more, there is, of course, nothing wrong with that either. However, research suggests that you have reaped most of the health benefits once you reach 100 PAI (4). You will likely get in shape even faster if you achieve 150 or 200 PAI per week, but even if you settle for 100 PAI each week, your fitness will continue to increase slowly but surely for a long time (3).
+
+
+
+
+
+PAI is for you 
+This is how PAI is adapted to each individual. With PAI, freedom of choice is central. If you are physically active in the way you like best, the chance of finding motivation to be active for the rest of your life is much greater. In Rome in 2016, Ulrik Wisløff had a vision to establish a new world standard for physical activity. Pulse by pulse, he is approaching his goal.
+
+
+
+
+And as long as Ulrik Wisløff continues to research exercise and health, we can promise you that Mia Health will give you the most accurate and reliable tools for you to find motivation and joy in effective physical activity that strengthens your heart, brain, fitness, and health.

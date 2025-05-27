@@ -1,0 +1,50 @@
+Find your maximum heart rate with Mia Health
+In order for Mia Health to give you the right AQ and the best possible insight into your health, it is important that your maximum heart rate in the Mia Health app is set correctly. If you don't know your maximum heart rate, Mia Health will calculate it for you in the app. Unfortunately, this calculation will be very inaccurate for many people, as maximum heart rate is largely governed by genetics. That's why we recommend that you lace up your sneakers and measure your maximum heart rate with us.
+
+Mia Health's maximum heart rate test
+In the video above (only available in Norwegian), our exercise physiologist Anders Revdal demonstrates how a maximum heart rate test is performed. You can do this test no matter how fit you are, and it's not necessary for everyone to run during the test.
+
+Useful information before the test
+However, what is crucial to get the right result is:
+
+Do the test on an uphill slope with a relatively even gradient. 5-10% is an appropriate recommendation. Of course, you can also do the test on a treadmill if you have the opportunity to do so. If you prefer to carry out the test on an exercise bike, you should be aware that most people will not be able to reach their actual maximum heart rate with a bike test. The result usually ends up 5-10 beats lower than what you achieve with a walking or running test.
+That the hill is so long that it takes you at least six minutes to reach the top when you walk/run as fast as you can.
+That you don't start too hard, but find a starting pace that you can maintain for 4-5 minutes without being completely exhausted.
+Push yourself until exhaustion the last time you walk/run up the hill.
+Use a heart rate monitor to measure your maximum heart rate, or start counting the beats on your carotid artery for , immediately after the test is over.
+How to perform the test
+If you're testing on a treadmill, you can start the video at the top of the page and complete the entire maximum heart rate test together with Anders. Either way, the recipe you follow is this:
+
+Warm up thoroughly for 10-15 minutes, so you get sweaty without wearing yourself out.
+Do two four-minute interval runs. Here you should get really out of breath and sweaty, but not completely exhausted. After each high-intensity interval, take a three-minute break with calmer activity to lower your heart rate and remove lactic acid.
+Start the third interval at the same pace as the first two. After two minutes, increase the load (i.e. the speed, or the incline if you're doing the test on a treadmill) a little. Continue with this load for 30 seconds before increasing it a little more. Increase the load in the same way every 30 seconds until you are simply unable to continue any longer.
+Measure your maximum heart rate by reading the highest heart rate value on your heart rate monitor or in the app from your watch manufacturer. If you don't have a heart rate monitor, you can count your heart rate with two fingers against your carotid artery for 15 seconds immediately after completing the test. Multiply this number by 4 to find your maximum heart rate.
+Enter your actual maximum heart rate in the Mia Health app, so that we can give you even better insight into your own health and more precise activity advice.
+Alternative test
+The test described above is the one we recommend for most people. It is safe to perform and will give you the most accurate result.
+If you still don't feel ready to push yourself to complete exhaustion, we have an alternative method that will give you a fairly accurate maximum heart rate:
+
+Do the test as described in steps 1 and 2 above.
+Instead of increasing the load after two minutes of the third interval, continue at the same pace for four minutes. At the end, you should be breathing very heavily and only be able to speak in very short sentences. You should feel so tired that you could have lasted another minute, but not much longer.
+Read your heart rate on your watch or measure with your fingers against your carotid artery as described in point 4 above. Your heart rate is now about 90% of your maximum heart rate, which for most people will be 15-20 beats below your actual maximum heart rate. You can find the approximate maximum heart rate by dividing the number of beats by 90 and then multiplying by 100.
+Why we don't use the formula "220-age"
+Some of you may have heard that you can find your maximum heart rate accurately by subtracting your age from 220? However, all the research that has been done on maximum heart rate shows that this is a very imprecise formula, which becomes more and more imprecise the older you get (1).
+
+In fact, it's almost impossible to create a maximum heart rate formula that works for everyone. Your maximum heart rate is largely determined by your genes. For example, it doesn't matter how fit you are or whether you're male or female, nor is your maximum heart rate affected by body weight, blood pressure or other factors.
+
+Max heart rate in Mia without test
+Nevertheless, The Cardiac Exercise Research Group at NTNU has made an attempt to create a formula that is more accurate for the majority than the 220-age formula (2). If you haven't yet tested your actual maximum heart rate, Mia Health will use the formula from NTNU to temporarily calculate your maximum heart rate. However, you should note that the NTNU formula can also miss by many beats, which will affect your AQ score.
+
+Let's use 40-year-old Anders from the video as an example:
+
+If he had calculated his max heart rate using the 220-age formula, he would have ended up with an estimated maximum heart rate of 180.
+
+If he had calculated his maximum heart rate using the NTNU formula, he would have ended up with an estimated maximum heart rate of 185.
+
+With Mia's maximum heart rate test, Anders achieved a real maximum heart rate of 175 beats per minute.
+
+Both formulas give Anders a higher maximum heart rate than he actually has. In other words, if he had relied on these calculations, earning AQ would become more difficult than it should be.
+
+For others, it can be the other way around: When your actual maximum heart rate is higher than the NTNU formula suggests, you earn AQ too easily in the Mia Health app if you haven't taken the maximum heart rate test. Then you risk not achieving all the health benefits of physical activity, even if the AQ in the app is 100 or more.
+
+Our recommendation is therefore that you perform a true test of your maximum heart rate to get the most out of your Mia Health experience.
