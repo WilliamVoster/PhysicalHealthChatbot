@@ -274,6 +274,66 @@ def build_article_context(db_response):
     return context
 
 
+def build_combined_article_context(objects: tuple[object, float]):
+    
+    context_builder = []
+
+    for (o, score) in objects:
+
+        if "full_article_id" in o.properties:
+            context_builder.append(
+                f"This raw chunk comes from article {o.properties['full_article_id']}, "
+                f"last updated at {o.properties['last_updated'].date()} - "
+            )
+        else:
+            context_builder.append(
+                f"This raw chunk comes from Mia Health's article {o.properties['source']} - "
+            )
+
+        context_builder.append(
+            f"Recorded chunk: {o.properties['chunk']}"
+        )
+    
+    context = "\n".join(context_builder)
+    return context
+
+
+def rerank_article_chunks(search_term, db_response_pubmed, db_response_miahealth):
+    
+    def score_article(query: str, chunk: str) -> float:
+        prompt = \
+            f"Query: \"{query}\"\n\n"\
+            f"Document: \"{chunk}\"\n\n"\
+            f"How relevant is the document to the provided query?"\
+            f"Please provide a rating from 1 to 10."\
+            f"Only reply with the number."
+        
+        response = llm.invoke(prompt)
+        
+        score = float(response.content)
+
+        return score
+
+    combined_list = []
+
+    for o in db_response_pubmed.objects:
+        # score = score_article(search_term, o.properties["chunk"])
+        score = o.metadata.distance
+        combined_list.append((o, score))
+
+    for o in db_response_miahealth.objects:
+        # score = score_article(search_term, o.properties["chunk"])
+        score = o.metadata.distance
+        combined_list.append((o, score))
+
+    combined_list.sort(key = lambda x : x[1], reverse=False)
+
+    for i in combined_list:
+        print(i[0].properties["chunk"][:20], i[1])
+
+    return combined_list
+
+
 def db_create_symptom_object(payload: list):
 
     symptoms = client.collections.get("Symptoms")
@@ -336,7 +396,7 @@ async def process_db_query_symptoms(term: str):
     return response
 
 
-async def process_db_query_articles(term: str):
+async def process_db_query_pubmed_articles(term: str):
 
     collection = client.collections.get("Articles_pubmed")
 
@@ -357,8 +417,33 @@ async def process_db_query_articles(term: str):
         include_vector=False
     )
 
-    print("ØØØØØ process_db_query_articles ", response)
+    print("ØØØØØ process_db_query_pubmed_articles ", response)
     return response
+
+
+async def process_db_query_miahealth_articles(term: str):
+
+    collection = client.collections.get("Articles_miahealth")
+
+    response = collection.query.near_text(
+        query=term,
+        limit=10,
+        return_metadata=MetadataQuery(
+            distance=True, 
+            certainty=True, 
+            creation_time=True, 
+            last_update_time=True
+        ),
+        return_properties=[
+            "chunk",
+            "source"
+        ],
+        include_vector=False
+    )
+
+    print("ØØØØØ process_db_query_miahealth_articles ", response)
+    return response
+
 
 def get_activity_quotient() -> float:
     return 12.0
@@ -367,13 +452,22 @@ def get_activity_quotient_string(term: str = "") -> str:
     aq = get_activity_quotient()
     return f"The user's current activity quotient (AQ) is {aq}."
 
-
 async def retrieve_user_symptoms(term: str) -> str:
     return_object = await process_db_query_symptoms(term)
     context = build_user_context(return_object)
     return context
 
 async def retrieve_articles(term: str) -> str:
+
+    db_response_pubmed_articles = await process_db_query_pubmed_articles(term)
+    db_response_miahealth_articles = await process_db_query_miahealth_articles(term)
+    combined_articles = rerank_article_chunks(
+        term, 
+        db_response_pubmed_articles, 
+        db_response_miahealth_articles)
+    
+    article_context = build_combined_article_context(combined_articles)
+    return article_context
     
     return_object = await process_db_query_articles(term)
     context = build_article_context(return_object)
@@ -569,16 +663,23 @@ async def query_with_context(request: Request):
     # Context fetching
     search_term = user_query + f"\n\nActivity quotient (AQ):{aq}"
     db_response_symptoms = await process_db_query_symptoms(user_query)
-    db_response_articles = await process_db_query_articles(search_term)
+    db_response_pubmed_articles = await process_db_query_pubmed_articles(search_term)
+    db_response_miahealth_articles = await process_db_query_miahealth_articles(search_term)
+    combined_articles = rerank_article_chunks(
+        user_query, 
+        db_response_pubmed_articles, 
+        db_response_miahealth_articles)
+    
 
     # Context building
     user_context = build_user_context(db_response_symptoms)
-    article_context = build_article_context(db_response_articles)
+    article_context = build_combined_article_context(combined_articles)
+
     user_context = f"{user_context}. The user's current activity quotient (AQ) is {aq}."
 
     # Context extraction
-    extracted, save_symptoms = process_symptom_extraction(user_query)
-    if save_symptoms: uuids = db_create_symptom_object(extracted)
+    # extracted, save_symptoms = process_symptom_extraction(user_query)
+    # if save_symptoms: uuids = db_create_symptom_object(extracted)
 
     
     return await process_llm_query(data, user_context, article_context, user_activity_quotient=aq)
@@ -671,6 +772,31 @@ async def create_collection_articles_pubmed():
     return {"message": f"created collection: {collection_pubmed}"}
 
 
+@app.get("/api/create_collection_articles_miahealth")
+async def create_collection_articles_miahealth():
+
+    client.collections.delete("Articles_miahealth")
+    collection_miahealth = client.collections.create(
+        "Articles_miahealth",
+        vectorizer_config=Configure.Vectorizer.text2vec_ollama(   
+            api_endpoint="http://ollama:11434",    
+            model="nomic-embed-text",
+        ),
+        vector_index_config=Configure.VectorIndex.hnsw(                 # Hierarchical Navigable Small World
+            distance_metric=VectorDistances.COSINE                      # Default, and good for NLP
+        ),
+        properties=[
+            Property(name="chunk", data_type=DataType.TEXT),
+            Property(name="source", data_type=DataType.TEXT),
+            # Property(name="full_article_link", data_type=DataType.TEXT),
+            # Property(name="last_updated", data_type=DataType.DATE)
+        ]
+    )
+
+    print("response", collection_miahealth)
+    return {"message": f"created collection: {collection_miahealth}"}
+
+
 @app.get("/api/create_object")
 async def create_object():
 
@@ -742,14 +868,20 @@ async def get_symptom_near(term: str = Query(..., description="Search-term for W
     return {"response": response}
 
 
-@app.get("/api/get_article_near")
+@app.get("/api/get_pubmed_article_near")
 async def get_article_near(term: str = Query(..., description="Search-term for Weaviate")):
 
-    response = await process_db_query_articles(term)
+    response = await process_db_query_pubmed_articles(term)
 
     return {"response": response}
- 
 
+
+@app.get("/api/get_miahealth_article_near")
+async def get_article_near(term: str = Query(..., description="Search-term for Weaviate")):
+
+    response = await process_db_query_miahealth_articles(term)
+
+    return {"response": response}
 
 
 
