@@ -22,15 +22,13 @@ def extract_body_section(text):
 
 
 if len(sys.argv) < 3:
-    # print("Usage: python your_script.py <csv_filename_of_PMC-OA_filelisting> <num_articles_to_parse>")
-    print("Usage: python your_script.py <csv_filename_of_PMC-OA_filelisting>")
+    print("Usage: python split_PMC-OA.py <csv_filename_of_PMC-OA_filelisting> <num_articles_to_parse>")
     sys.exit(1)
 
 data_dir_path = ["C:\\", "Users", "willi", "Documents", "NTNU", "Master", "data"]
 
 # csv_path = "oa_comm_txt.PMC011xxxxxx.baseline.2024-12-17.filelist.csv"
 csv_path = sys.argv[1]
-# PMID_to_start_from = sys.argv[2]
 num_articles_to_parse = int(sys.argv[2])
 
 
