@@ -43,6 +43,12 @@ llm = ChatOllama(
     temperature=0
 )
 
+llm_with_temperature = ChatOllama(
+    base_url="http://ollama:11434", 
+    model="llama3.2:latest",
+    temperature=4
+)
+
 @app.get("/")
 async def root():
 
@@ -56,7 +62,14 @@ async def root():
     return collections
 
 
-async def process_llm_query(data, user_context = "", article_context = "", user_activity_quotient = None):
+async def process_llm_query(
+        data, 
+        user_context = "", 
+        article_context = "", 
+        feedback_box_examples = None,
+        custom_system_prompt: str = None, 
+        user_aq = None,
+        user_aq_goal = None):
 
     history = []
 
@@ -73,7 +86,10 @@ async def process_llm_query(data, user_context = "", article_context = "", user_
         f"Use three sentences maximum and keep the answer concise.\n"\
         # f"Context: [{context}]"
     
-    history.append(SystemMessage(content=system_prompt))
+    if custom_system_prompt is None:
+        history.append(SystemMessage(content=system_prompt))
+    else:
+        history.append(SystemMessage(content=custom_system_prompt))
 
     for role, content in data["history"]:
         print(role)
@@ -88,12 +104,15 @@ async def process_llm_query(data, user_context = "", article_context = "", user_
         elif role == "SYSTEM":
             history.append(SystemMessage(content=content))
 
-    if user_activity_quotient is not None:
+    if user_aq is not None:
         content = \
-            f"An automated system silently found the user's current activity quotient (AQ):" \
-            f"{user_activity_quotient}. \n The user did not mention this themselves." \
-            f"AQ stands for activity quotient, and is the successor to the PAI score (personal activity intelligence)." \
-            f"It scores a persons physcial activity, where 100 points gives the maximum possible health benefits."
+            f"An automated system silently found the user's current activity quotient (AQ): " \
+            f"{user_aq}. \n The user did not mention this themselves. " \
+            f"AQ stands for activity quotient, and is the successor to the PAI score (personal activity intelligence). " \
+            f"It scores a persons physcial activity, where 100 points gives the maximum possible health benefits. "
+
+        if user_aq_goal is not None:
+            content = f"{content} The user has set a goal for themselves of maintaining an AQ of {user_aq_goal}. "
 
         history.append(SystemMessage(content=content))
         data["history"].append(["SYSTEM", content])
@@ -112,6 +131,14 @@ async def process_llm_query(data, user_context = "", article_context = "", user_
         
         history.append(SystemMessage(content=content))
         data["history"].append(["SYSTEM", content])
+
+    if feedback_box_examples is not None:
+        content = \
+            f"Here are some examples of feedback boxes in JSON format: {feedback_box_examples}"
+        
+        history.append(SystemMessage(content=content))
+        data["history"].append(["SYSTEM", content])
+
 
     prompt = data["query"]
 
@@ -445,16 +472,66 @@ async def process_db_query_miahealth_articles(term: str):
     return response
 
 
+async def process_db_query_feedback_boxes(term: str):
+
+    collection = client.collections.get("Feedback_boxes_miahealth")
+
+    response = collection.query.near_text(
+        query=term,
+        limit=10,
+        return_metadata=MetadataQuery(
+            distance=True, 
+            certainty=True, 
+            creation_time=True, 
+            last_update_time=True
+        ),
+        return_properties=[
+            "rule",
+            "tone_of_voice",
+            "message"
+        ],
+        include_vector=False
+    )
+
+    print("YYYYY process_db_query_feedback_boxes ", response)
+    return response
+
+
+def filter_db_response_by_distance(response, max_distance: float = 0.5):
+
+    filtered_response = {
+        "objects": []
+    }
+    for o in response.objects:
+        if o.metadata.distance < max_distance:
+            filtered_response["objects"].append(o)
+
+    return filtered_response
+    
+
 def get_activity_quotient() -> float:
     return 12.0
 
+def get_activity_quotient_goal() -> float:
+    return 60.0
+
 def get_activity_quotient_string(term: str = "") -> str:
     aq = get_activity_quotient()
-    return f"The user's current activity quotient (AQ) is {aq}."
+    aq_goal = get_activity_quotient_goal()
+
+    return_string = ""
+
+    if aq is not None:
+        return_string = f"The user's current activity quotient (AQ) is {aq}. "
+
+    if aq_goal is not None:
+        return_string = f"{return_string}The user has set a goal for themselves of maintaining an AQ of {aq_goal}. "
+
+    return return_string
 
 async def retrieve_user_symptoms(term: str) -> str:
-    return_object = await process_db_query_symptoms(term)
-    context = build_user_context(return_object)
+    db_response = await process_db_query_symptoms(term)
+    context = build_user_context(db_response)
     return context
 
 async def retrieve_articles(term: str) -> str:
@@ -472,6 +549,26 @@ async def retrieve_articles(term: str) -> str:
     return_object = await process_db_query_articles(term)
     context = build_article_context(return_object)
     return context
+
+async def retrieve_feedback_box_examples(term: str) -> str:
+
+    db_response = await process_db_query_feedback_boxes(term)
+
+    filtered_response = filter_db_response_by_distance(db_response, max_distance=0.5)
+
+    context = []
+
+    for o in filtered_response["objects"]:
+        # o["properties"]["rule"]
+        # o["properties"]["tone_of_voice"]
+        # o["properties"]["message"]
+
+        context.append(o.properties)
+
+    # print("ASVASKDGAJVASDASDASV", str(context))
+
+    return str(context)
+
 
 tool_retrieve_user_attributes = Tool(
     name="retrieve_user_attributes",
@@ -491,6 +588,14 @@ tool_retrieve_user_activity_quotient = Tool(
     description="Fetch the user's current AQ / Activity Quotient. This is a score from 0-100 of how physically active they are."
 )
 
+tool_retrieve_feedback_box_examples = Tool(
+    name="retrieve_feedback_box_examples",
+    func= retrieve_feedback_box_examples,
+    description=\
+        "Fetch a list of examples of how to properly write a feedback box message. "
+        "The search term can help find examples closer related to a topic/tone/rule. "
+)
+
 tool_no_tool = Tool(
     name="no_tool", 
     func=lambda x : x, 
@@ -502,7 +607,8 @@ def node_router(state: MessagesState):
     
     messages = [SystemMessage(content=
         "You are an assistant with access to tools. "
-        "Only call a tool if it's necessary to answer the user's question. "
+        # "Only call a tool if it's necessary to answer the user's question. "
+        "Call all the tools you think you would need to answer the user's question. "
         # "If multiple tools seem relevant, call them one at a time in separate turns, based on available context. "
         # "e.g. you might need the output of one to query the other. "
         # "You must always use at least one too, even though you might want to answer directly - instead call the 'no_tool' tool"
@@ -516,7 +622,8 @@ def node_router(state: MessagesState):
             tool_no_tool, 
             tool_retrieve_user_attributes, 
             tool_retrieve_articles, 
-            tool_retrieve_user_activity_quotient
+            tool_retrieve_user_activity_quotient,
+            tool_retrieve_feedback_box_examples
         ]).invoke(messages)
     
     print("\n\n *********************Router RESPONSE: \t", response, "\n\n")
@@ -550,6 +657,25 @@ def node_generate_answer(state: MessagesState):
         {"role": "system", "content": system_prompt}, 
         {"role": "user", "content": question}
     ])
+
+    return {"messages": [response]}
+
+feedback_box_instructions = \
+    f"Your task is to generate a short feedback message to a user about their physical activity. "\
+    f"The user should have a recorded Activity Quotient (aka. AQ) rating, which is calculated from the last 7 days. "\
+    f"Feedback messages can either be a 'Call_to_action', 'Motivational', or 'Informational'. "\
+    f"Use any available information about the user's situation to personalize as much as possible. "\
+    f"Respond with a maximum of 2 sentences. "\
+    f"Respond only with the feedback message and nothing else. "\
+
+def node_generate_feedback_box(state: MessagesState):
+
+    state["messages"].insert(0, SystemMessage(content=feedback_box_instructions))
+
+    print(state["messages"])
+
+    response = llm.invoke(state["messages"])
+    # response = llm_with_temperature.invoke(state["messages"])
 
     return {"messages": [response]}
 
@@ -618,7 +744,9 @@ workflow.add_node("router", node_router)
 workflow.add_node("retrieve_articles", safe_tool_node_factory(tool_retrieve_articles))
 workflow.add_node("retrieve_user_attributes", safe_tool_node_factory(tool_retrieve_user_attributes))
 workflow.add_node("retrieve_user_activity_quotient", safe_tool_node_factory(tool_retrieve_user_activity_quotient))
+workflow.add_node("retrieve_feedback_box_examples", safe_tool_node_factory(tool_retrieve_feedback_box_examples))
 workflow.add_node("generate_answer", node_generate_answer)
+workflow.add_node("generate_feedback_box", node_generate_feedback_box)
 
 workflow.add_edge(START, "router")
 workflow.add_conditional_edges(
@@ -628,13 +756,16 @@ workflow.add_conditional_edges(
         "no_tool": "generate_answer", 
         "retrieve_articles": "retrieve_articles", 
         "retrieve_user_attributes": "retrieve_user_attributes",
-        "retrieve_user_activity_quotient": "retrieve_user_activity_quotient"
+        "retrieve_user_activity_quotient": "retrieve_user_activity_quotient",
+        "retrieve_feedback_box_examples": "retrieve_feedback_box_examples"
     }
 )
 workflow.add_edge("retrieve_articles", "generate_answer")
 workflow.add_edge("retrieve_user_attributes", "generate_answer")
 workflow.add_edge("retrieve_user_activity_quotient", "generate_answer")
+workflow.add_edge("retrieve_feedback_box_examples", "generate_feedback_box")
 workflow.add_edge("generate_answer", END)
+workflow.add_edge("generate_feedback_box", END)
 
 agent_graph = workflow.compile()
 
@@ -647,8 +778,30 @@ async def query(request: Request):
     data = await request.json()
 
     aq = get_activity_quotient()
+    aq_goal = get_activity_quotient_goal()
     
-    return await process_llm_query(data, user_activity_quotient=aq)
+    return await process_llm_query(
+        data, 
+        user_aq=aq, 
+        user_aq_goal=aq_goal
+    )
+
+
+# Variation of Program version: 1 (MVP), used to generate feedback box messages
+@app.post("/api/query_feedback_box")
+async def query(request: Request):
+
+    data = await request.json()
+
+    aq = get_activity_quotient()
+    aq_goal = get_activity_quotient_goal()
+    
+    return await process_llm_query(
+        data, 
+        user_aq=aq, 
+        user_aq_goal=aq_goal,
+        custom_system_prompt=feedback_box_instructions
+    )
 
 
 # Program version: 2 (with user + article context)
@@ -663,13 +816,14 @@ async def query_with_context(request: Request):
     # Context fetching
     search_term = user_query + f"\n\nActivity quotient (AQ):{aq}"
     db_response_symptoms = await process_db_query_symptoms(user_query)
-    db_response_pubmed_articles = await process_db_query_pubmed_articles(search_term)
+    db_response_pubmed_articles = await process_db_query_pubmed_articles(user_query)
     db_response_miahealth_articles = await process_db_query_miahealth_articles(search_term)
+
     combined_articles = rerank_article_chunks(
         user_query, 
         db_response_pubmed_articles, 
-        db_response_miahealth_articles)
-    
+        db_response_miahealth_articles
+    )
 
     # Context building
     user_context = build_user_context(db_response_symptoms)
@@ -682,7 +836,50 @@ async def query_with_context(request: Request):
     # if save_symptoms: uuids = db_create_symptom_object(extracted)
 
     
-    return await process_llm_query(data, user_context, article_context, user_activity_quotient=aq)
+    return await process_llm_query(
+        data, 
+        user_context, 
+        article_context, 
+        user_activity_quotient=aq
+    )
+
+
+# Variation of Program version: 2, used to generate feedback box messages
+@app.post("/api/query_with_context_feedback_box")
+async def query_with_context(request: Request):
+
+    data = await request.json()
+
+    user_query = data["query"]
+    aq = get_activity_quotient()
+    aq_goal = get_activity_quotient_goal()
+
+    # Context fetching
+    search_term = user_query + f"\n\nActivity quotient (AQ):{aq}"
+    db_response_symptoms = await process_db_query_symptoms(term=user_query)
+    db_response_pubmed_articles = await process_db_query_pubmed_articles(term=search_term)
+    db_response_miahealth_articles = await process_db_query_miahealth_articles(term=search_term)
+    db_response_feedback_box_examples = await retrieve_feedback_box_examples(term=search_term)
+
+    combined_articles = rerank_article_chunks(
+        user_query, 
+        db_response_pubmed_articles, 
+        db_response_miahealth_articles
+    )
+
+    # Context building
+    user_context = build_user_context(db_response_symptoms)
+    article_context = build_combined_article_context(combined_articles)
+
+    return await process_llm_query(
+        data, 
+        user_context, 
+        article_context,
+        feedback_box_examples=db_response_feedback_box_examples,
+        user_aq=aq,
+        user_aq_goal=aq_goal,
+        custom_system_prompt=feedback_box_instructions
+    )
 
 
 # Program version: 3 (agentified)
@@ -705,12 +902,11 @@ async def query_agent(request: Request):
         "content": user_query,
     }]})
 
-    return process_llm_query_from_messages(messages["messages"])
-    
     final_response = messages["messages"][-1]
     final_response.pretty_print()
-    return final_response
 
+    return process_llm_query_from_messages(messages["messages"])
+    
 
 
 @app.get("/api/create_collection_symptoms")
@@ -903,4 +1099,12 @@ async def get_article_near(term: str = Query(..., description="Search-term for W
     return {"response": response}
 
 
+@app.get("/api/get_feedback_boxes_near")
+async def get_article_near(term: str = Query(..., description="Search-term for Weaviate")):
+
+    response = await process_db_query_feedback_boxes(term)
+
+    filtered_response = filter_db_response_by_distance(response, max_distance=0.5)
+
+    return {"response": filtered_response}
 
