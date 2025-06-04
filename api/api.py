@@ -702,20 +702,13 @@ async def query_agent(request: Request):
 
     messages = await agent_graph.ainvoke({"messages": [{
         "role": "user",
-        # "content": "hello", 
-        # "content": "what are possible symptoms of the drug 'Herbamed solice'?",
-        # "content": "am i working out enough?",
-        # "content": "do not fetch any expert knowledge. What is my name?",
-        # "content": "What is my name, and what is my AQ?",
-        # "content": "what is my Activity Quotient?",
         "content": user_query,
     }]})
 
-    final_response = messages["messages"][-1]
-    final_response.pretty_print()
-
     return process_llm_query_from_messages(messages["messages"])
     
+    final_response = messages["messages"][-1]
+    final_response.pretty_print()
     return final_response
 
 
@@ -724,6 +717,7 @@ async def query_agent(request: Request):
 async def create_collection_symptoms():
 
     client.collections.delete("Symptoms")
+
     symptoms = client.collections.create(
         "Symptoms",
         vectorizer_config=Configure.Vectorizer.text2vec_ollama(   
@@ -752,6 +746,7 @@ async def create_collection_symptoms():
 async def create_collection_articles_pubmed():
 
     client.collections.delete("Articles_pubmed")
+
     collection_pubmed = client.collections.create(
         "Articles_pubmed",
         vectorizer_config=Configure.Vectorizer.text2vec_ollama(   
@@ -776,6 +771,7 @@ async def create_collection_articles_pubmed():
 async def create_collection_articles_miahealth():
 
     client.collections.delete("Articles_miahealth")
+
     collection_miahealth = client.collections.create(
         "Articles_miahealth",
         vectorizer_config=Configure.Vectorizer.text2vec_ollama(   
@@ -787,14 +783,37 @@ async def create_collection_articles_miahealth():
         ),
         properties=[
             Property(name="chunk", data_type=DataType.TEXT),
-            Property(name="source", data_type=DataType.TEXT),
-            # Property(name="full_article_link", data_type=DataType.TEXT),
-            # Property(name="last_updated", data_type=DataType.DATE)
+            Property(name="source", data_type=DataType.TEXT)
         ]
     )
 
     print("response", collection_miahealth)
     return {"message": f"created collection: {collection_miahealth}"}
+
+
+@app.get("/api/create_collection_feedback_boxes")
+async def create_collection_articles_miahealth():
+
+    client.collections.delete("Feedback_boxes_miahealth")
+
+    collection_feedback = client.collections.create(
+        "Feedback_boxes_miahealth",
+        vectorizer_config=Configure.Vectorizer.text2vec_ollama(   
+            api_endpoint="http://ollama:11434",    
+            model="nomic-embed-text",
+        ),
+        vector_index_config=Configure.VectorIndex.hnsw(                 # Hierarchical Navigable Small World
+            distance_metric=VectorDistances.COSINE                      # Default, and good for NLP
+        ),
+        properties=[
+            Property(name="rule", data_type=DataType.TEXT_ARRAY),
+            Property(name="tone_of_voice", data_type=DataType.TEXT),
+            Property(name="message", data_type=DataType.TEXT)
+        ]
+    )
+
+    print("response", collection_feedback)
+    return {"message": f"created collection: {collection_feedback}"}
 
 
 @app.get("/api/create_object")
