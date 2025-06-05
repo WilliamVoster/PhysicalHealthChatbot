@@ -72,21 +72,27 @@ def items_show():
 
 
     for item in fetch_response_data["message"]:
-        st.subheader(f"item: {item['uuid']}")
-        st.text(f"symptom: {item['properties']['symptom']}")
-        st.text(f"symptom_confidence: {item['properties']['symptom_confidence']}")
-        st.text(f"recency_specified: {item['properties']['recency_specified']}")
-        st.text(f"date_recorded: {item['properties']['date_recorded']}")
+
+        st.subheader(f"{item['properties']['symptom']}")
+
+        text = \
+            f"confidence: {item['properties']['symptom_confidence']}\n"\
+            f"recency_specified: {item['properties']['recency_specified']}\n"
+            # f"item: {item['uuid']}"
+        
+        st.text(text)
+
+        # st.text(f"date_recorded: {item['properties']['date_recorded']}")
         # st.text(f"Properties: {item['properties']}")
 
-        # if st.button(f"Delete {item['uuid']}", key=f"delete_id_{item['uuid']}"):
+        if st.button(f"Delete", key=f"delete_id_{item['uuid']}"):
 
-        #     data = {"Collection": "Symptoms", "uuid": item['uuid']}
+            data = {"Collection": "Symptoms", "uuid": item['uuid']}
 
-        #     delete_response = requests.post("http://api:8000/api/delete_object", json=data)
-        #     delete_response_data = delete_response.json()
+            delete_response = requests.post("http://api:8000/api/delete_object", json=data)
+            delete_response_data = delete_response.json()
 
-        #     st.write(delete_response_data)
+            st.write(delete_response_data)
             
 
 def select_system():
