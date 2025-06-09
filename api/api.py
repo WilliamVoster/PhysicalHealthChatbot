@@ -789,7 +789,7 @@ async def query(request: Request):
 
 # Variation of Program version: 1 (MVP), used to generate feedback box messages
 @app.post("/api/query_feedback_box")
-async def query(request: Request):
+async def query_feedback_box(request: Request):
 
     data = await request.json()
 
@@ -846,7 +846,7 @@ async def query_with_context(request: Request):
 
 # Variation of Program version: 2, used to generate feedback box messages
 @app.post("/api/query_with_context_feedback_box")
-async def query_with_context(request: Request):
+async def query_with_context_feedback_box(request: Request):
 
     data = await request.json()
 
