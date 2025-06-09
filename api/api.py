@@ -812,6 +812,7 @@ async def query_with_context(request: Request):
 
     user_query = data["query"]
     aq = get_activity_quotient()
+    aq_goal = get_activity_quotient_goal()
 
     # Context fetching
     search_term = user_query + f"\n\nActivity quotient (AQ):{aq}"
@@ -840,7 +841,8 @@ async def query_with_context(request: Request):
         data, 
         user_context, 
         article_context, 
-        user_activity_quotient=aq
+        user_aq=aq,
+        user_aq_goal=aq_goal,
     )
 
 
