@@ -106,8 +106,7 @@ async def process_llm_query(
 
     if user_aq is not None:
         content = \
-            f"An automated system silently found the user's current activity quotient (AQ): " \
-            f"{user_aq}. \n The user did not mention this themselves. " \
+            f"An automated system found the user's current activity quotient (AQ): {user_aq}. \n" \
             f"AQ stands for activity quotient, and is the successor to the PAI score (personal activity intelligence). " \
             f"It scores a persons physcial activity, where 100 points gives the maximum possible health benefits. "
 
@@ -554,7 +553,7 @@ async def retrieve_feedback_box_examples(term: str) -> str:
 
     db_response = await process_db_query_feedback_boxes(term)
 
-    filtered_response = filter_db_response_by_distance(db_response, max_distance=0.5)
+    filtered_response = filter_db_response_by_distance(db_response, max_distance=0.8)
 
     context = []
 
@@ -566,6 +565,8 @@ async def retrieve_feedback_box_examples(term: str) -> str:
         context.append(o.properties)
 
     # print("ASVASKDGAJVASDASDASV", str(context))
+    # print("ASVASKDGAJVASDASDASV", filtered_response)
+    # print("ASVASKDGAJVASDASDASV", db_response)
 
     return str(context)
 
@@ -579,7 +580,9 @@ tool_retrieve_user_attributes = Tool(
 tool_retrieve_articles = Tool(
     name="retrieve_articles",
     func=retrieve_articles,
-    description="Fetch chunks of text from published articles on physical health to use for additional context."
+    description=\
+        "Fetch chunks of text from published articles on physical health"
+        " to use for additional context. Always supply a search term for this tool. "
 )
 
 tool_retrieve_user_activity_quotient = Tool(
@@ -594,6 +597,7 @@ tool_retrieve_feedback_box_examples = Tool(
     description=\
         "Fetch a list of examples of how to properly write a feedback box message. "
         "The search term can help find examples closer related to a topic/tone/rule. "
+        "Always call this tool if user mentions 'feedback'. "
 )
 
 tool_no_tool = Tool(
@@ -634,7 +638,7 @@ def node_generate_answer(state: MessagesState):
     print("\n\ngenerate_answer ---> ", state, "\n\n")
 
     question = state["messages"][0].content
-    context = ""
+    context = None
 
     for msg in state["messages"]:
         if type(msg) == ToolMessage:
@@ -648,15 +652,20 @@ def node_generate_answer(state: MessagesState):
         f"Do not answer confidently if you are unsure about a question. "\
         f"If you don't know the answer, just say that you don't know. "\
         f"Use three sentences maximum and keep the answer concise.\n"\
-        f"Context: [{context}]"
-    
+        # f"Context: [{context}]"
+
+    system_context = f"Context: {context}"
+
     print("PROMPT", system_prompt)
     print("\n\n", question, "\nCCCCCCC\n")
+
+
+    full_prompt = []
+    full_prompt.append({"role": "system", "content": system_prompt})
+    if context is not None: full_prompt.append({"role": "system", "content": system_context})
+    full_prompt.append({"role": "human", "content": question})
     
-    response = llm.invoke([
-        {"role": "system", "content": system_prompt}, 
-        {"role": "user", "content": question}
-    ])
+    response = llm.invoke(full_prompt)
 
     return {"messages": [response]}
 
