@@ -70,22 +70,23 @@ def items_show():
 
     st.write(fetch_response_data)
 
+    cols = st.columns([1, 1, 1, 2])
+    cols[0].markdown("**Symptom**")
+    cols[1].markdown("**Confidence**")
+    cols[2].markdown("**Recency specified**")
+    cols[3].markdown("**Delete**")
+    
 
     for item in fetch_response_data["message"]:
 
-        st.subheader(f"{item['properties']['symptom']}")
+        st.markdown("<hr style='margin: 0;'>", unsafe_allow_html=True)
 
-        text = \
-            f"confidence: {item['properties']['symptom_confidence']}\n"\
-            f"recency_specified: {item['properties']['recency_specified']}\n"
-            # f"item: {item['uuid']}"
-        
-        st.text(text)
+        cols = st.columns([1, 1, 1, 2])
+        cols[0].write(item['properties']['symptom'])
+        cols[1].write(item['properties']['symptom_confidence'])
+        cols[2].write(item['properties']['recency_specified'])
 
-        # st.text(f"date_recorded: {item['properties']['date_recorded']}")
-        # st.text(f"Properties: {item['properties']}")
-
-        if st.button(f"Delete", key=f"delete_id_{item['uuid']}"):
+        if cols[3].button(f"Delete", key=f"delete_id_{item['uuid']}"):
 
             data = {"Collection": "Symptoms", "uuid": item['uuid']}
 
