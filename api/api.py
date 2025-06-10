@@ -68,6 +68,7 @@ async def process_llm_query(
         data, 
         user_context = "", 
         article_context = "", 
+        web_search_context = "",
         feedback_box_examples = None,
         custom_system_prompt: str = None, 
         user_aq = None,
@@ -129,6 +130,15 @@ async def process_llm_query(
             f"Context fetched from raw chunks of published medical articles, "\
             f"please use this information with a pinch of salt, "\
             f"it is also fine to not use these in your response: {article_context}"
+        
+        history.append(SystemMessage(content=content))
+        data["history"].append(["SYSTEM", content])
+
+    if len(web_search_context) > 0:
+        content = \
+            f"Context fetched from the web / internet, "\
+            f"please use this information with a pinch of salt, "\
+            f"it is also fine to not use these in your response: {web_search_context}"
         
         history.append(SystemMessage(content=content))
         data["history"].append(["SYSTEM", content])
@@ -579,7 +589,7 @@ async def search_web(term: str) -> str:
 
     print("-----TAVILY SEARCH data: ", result)
 
-    return result
+    return f"Search term: {term} \n\nResult: {result}"
 
 
 tool_retrieve_user_attributes = Tool(
@@ -593,7 +603,7 @@ tool_retrieve_articles = Tool(
     func=retrieve_articles,
     description=\
         "Fetch chunks of text from a DB with published scientific articles on physical health"
-        " to use for additional context. Always supply a search term for this tool. "
+        " to use for additional context. Requires a search term. "
 )
 
 tool_retrieve_user_activity_quotient = Tool(
@@ -615,7 +625,7 @@ tool_search_web = Tool(
     name="search_web",
     func= search_web,
     description=\
-        "Search the web and internet for anything current. e.g. the weather."
+        "Search the web and internet for anything current. "
 )
 
 tool_no_tool = Tool(
@@ -630,11 +640,13 @@ def node_router(state: MessagesState):
     messages = [SystemMessage(content=
         "You are an assistant with access to tools. "
         # "Only call a tool if it's necessary to answer the user's question. "
+        # "Your goal is to answer with highly personalized responses. \n"
         "Call all the tools you think you would need to answer the user's question. "
+        # "The bar for calling tools should be very low, use tools often! \n"
         # "If multiple tools seem relevant, call them one at a time in separate turns, based on available context. "
         # "e.g. you might need the output of one to query the other. "
         # "You must always use at least one too, even though you might want to answer directly - instead call the 'no_tool' tool"
-        "If it's a simple / general question not related to physical health, just respond directly."
+        "If it's a simple / general question not related to physical health, just respond directly. "
     )] + state["messages"]
 
     print("\n\n ********************Router MESSAGES: \t", messages, "\n\n")
@@ -645,7 +657,6 @@ def node_router(state: MessagesState):
             tool_retrieve_user_attributes, 
             tool_retrieve_articles, 
             tool_retrieve_user_activity_quotient,
-            tool_retrieve_feedback_box_examples,
             tool_search_web
         ]).invoke(messages)
     
@@ -688,13 +699,21 @@ def node_generate_answer(state: MessagesState):
 
     return {"messages": [response]}
 
+    # state["messages"].insert(0, SystemMessage(content=system_prompt))
+
+    # # print(state["messages"])
+
+    # response = llm.invoke(state["messages"])
+
+    # return {"messages": [response]}
+
 feedback_box_instructions = \
     f"Your task is to generate a short feedback message to a user about their physical activity. "\
     f"The user should have a recorded Activity Quotient (aka. AQ) rating, which is calculated from the last 7 days. "\
     f"Feedback messages can either be a 'Call_to_action', 'Motivational', or 'Informational'. "\
     f"Use any available information about the user's situation to personalize as much as possible. "\
     f"Respond with a maximum of 2 sentences. "\
-    f"Respond only with the feedback message and nothing else. "\
+    f"\n**Respond only with the feedback message and nothing else!**"\
 
 def node_router_feedback_box(state: MessagesState):
 
@@ -729,10 +748,9 @@ def node_generate_feedback_box(state: MessagesState):
 
     state["messages"].insert(0, SystemMessage(content=feedback_box_instructions))
 
-    print(state["messages"])
+    # print(state["messages"])
 
     response = llm.invoke(state["messages"])
-    # response = llm_with_temperature.invoke(state["messages"])
 
     return {"messages": [response]}
 
@@ -872,9 +890,9 @@ async def query(request: Request):
     aq_goal = get_activity_quotient_goal()
     
     return await process_llm_query(
-        data, 
-        user_aq=aq, 
-        user_aq_goal=aq_goal
+        data = data, 
+        user_aq = aq, 
+        user_aq_goal = aq_goal
     )
 
 
@@ -888,10 +906,10 @@ async def query_feedback_box(request: Request):
     aq_goal = get_activity_quotient_goal()
     
     return await process_llm_query(
-        data, 
-        user_aq=aq, 
-        user_aq_goal=aq_goal,
-        custom_system_prompt=feedback_box_instructions
+        data = data, 
+        user_aq = aq, 
+        user_aq_goal = aq_goal,
+        custom_system_prompt = feedback_box_instructions
     )
 
 
@@ -910,6 +928,7 @@ async def query_with_context(request: Request):
     db_response_symptoms = await process_db_query_symptoms(user_query)
     db_response_pubmed_articles = await process_db_query_pubmed_articles(user_query)
     db_response_miahealth_articles = await process_db_query_miahealth_articles(search_term)
+    web_search_context = await search_web("Trondheim weather")
 
     combined_articles = rerank_article_chunks(
         user_query, 
@@ -929,11 +948,12 @@ async def query_with_context(request: Request):
 
     
     return await process_llm_query(
-        data, 
-        user_context, 
-        article_context, 
-        user_aq=aq,
-        user_aq_goal=aq_goal,
+        data = data, 
+        user_context = user_context, 
+        article_context = article_context,
+        web_search_context = web_search_context,
+        user_aq = aq,
+        user_aq_goal = aq_goal,
     )
 
 
@@ -953,6 +973,7 @@ async def query_with_context_feedback_box(request: Request):
     db_response_pubmed_articles = await process_db_query_pubmed_articles(term=search_term)
     db_response_miahealth_articles = await process_db_query_miahealth_articles(term=search_term)
     db_response_feedback_box_examples = await retrieve_feedback_box_examples(term=search_term)
+    web_search_context = await search_web("Trondheim weather")
 
     combined_articles = rerank_article_chunks(
         user_query, 
@@ -965,13 +986,14 @@ async def query_with_context_feedback_box(request: Request):
     article_context = build_combined_article_context(combined_articles)
 
     return await process_llm_query(
-        data, 
-        user_context, 
-        article_context,
-        feedback_box_examples=db_response_feedback_box_examples,
-        user_aq=aq,
-        user_aq_goal=aq_goal,
-        custom_system_prompt=feedback_box_instructions
+        data = data, 
+        user_context = user_context, 
+        article_context = article_context,
+        web_search_context = web_search_context,
+        feedback_box_examples = db_response_feedback_box_examples,
+        user_aq = aq,
+        user_aq_goal = aq_goal,
+        custom_system_prompt = feedback_box_instructions
     )
 
 
