@@ -6,5 +6,6 @@ uvicorn
 langchain-ollama
 langchain
 langchain-core
+langchain-google-genai
 langgraph
 asyncio

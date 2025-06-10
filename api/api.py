@@ -23,6 +23,8 @@ from dotenv import load_dotenv
 
 import requests, os
 
+from langchain_google_genai import ChatGoogleGenerativeAI
+
 load_dotenv(dotenv_path=".env")
 
 app = FastAPI()
@@ -45,11 +47,17 @@ llm = ChatOllama(
     temperature=0
 )
 
+# llm = ChatGoogleGenerativeAI(
+#     model="gemini-2.5-flash-preview-05-20",
+#     temperature=0
+# )
+
 llm_with_temperature = ChatOllama(
     base_url="http://ollama:11434", 
     model="llama3.2:latest",
     temperature=4
 )
+
 
 @app.get("/")
 async def root():
@@ -576,6 +584,8 @@ async def retrieve_feedback_box_examples(term: str) -> str:
 
 async def search_web(term: str) -> str:
     
+    if term == "": return ""
+
     response = requests.post(
         "https://api.tavily.com/search",
         json={"query": term, "max_results": 2},
@@ -592,10 +602,12 @@ async def search_web(term: str) -> str:
     return f"Search term: {term} \n\nResult: {result}"
 
 
-tool_retrieve_user_attributes = Tool(
-    name="retrieve_user_attributes",
+tool_retrieve_user_symptoms = Tool(
+    name="retrieve_user_symptoms",
     func=retrieve_user_symptoms,
-    description="Fetch attributes and symptoms about the user to use for additional context and personalization."
+    description=\
+        "Fetch attributes and symptoms about the user "
+        "to use for additional context and personalization. "
 )
 
 tool_retrieve_articles = Tool(
@@ -609,7 +621,9 @@ tool_retrieve_articles = Tool(
 tool_retrieve_user_activity_quotient = Tool(
     name="retrieve_user_activity_quotient",
     func= get_activity_quotient_string,
-    description="Fetch the user's current AQ / Activity Quotient. This is a score from 0-100 of how physically active they are."
+    description=\
+        "Fetch the user's current AQ / Activity Quotient. This is a score from 0-100 "
+        "of how physically active they are."
 )
 
 tool_retrieve_feedback_box_examples = Tool(
@@ -625,13 +639,15 @@ tool_search_web = Tool(
     name="search_web",
     func= search_web,
     description=\
-        "Search the web and internet for anything current. "
+        "Search the internet for anything current. "
 )
 
 tool_no_tool = Tool(
     name="no_tool", 
     func=lambda x : x, 
-    description="Move to answer the user's query. You have gathered all the context you need for this prompt."
+    description=\
+        "Move to answer the query without gathering "
+        "any information or calling any tool. "
 )
 
 
@@ -642,6 +658,8 @@ def node_router(state: MessagesState):
         # "Only call a tool if it's necessary to answer the user's question. "
         # "Your goal is to answer with highly personalized responses. \n"
         "Call all the tools you think you would need to answer the user's question. "
+        "You are capable of knowing some of  the user's medical history and current health status. "
+        "You also have access to personal information. "
         # "The bar for calling tools should be very low, use tools often! \n"
         # "If multiple tools seem relevant, call them one at a time in separate turns, based on available context. "
         # "e.g. you might need the output of one to query the other. "
@@ -654,7 +672,7 @@ def node_router(state: MessagesState):
     response = llm\
         .bind_tools([
             tool_no_tool, 
-            tool_retrieve_user_attributes, 
+            tool_retrieve_user_symptoms, 
             tool_retrieve_articles, 
             tool_retrieve_user_activity_quotient,
             tool_search_web
@@ -665,15 +683,15 @@ def node_router(state: MessagesState):
     return {"messages": state["messages"] + [response]}
 
 def node_generate_answer(state: MessagesState):
-    print("\n\ngenerate_answer ---> ", state, "\n\n")
+    # print("\n\ngenerate_answer ---> ", state, "\n\n")
 
-    question = state["messages"][0].content
-    context = None
+    # question = state["messages"][0].content
+    # context = None
 
-    for msg in state["messages"]:
-        if type(msg) == ToolMessage:
-            if msg.name != "no_tool":
-                context = f"[{msg.content}] from {msg.name}, the next context provided is:{context}"
+    # for msg in state["messages"]:
+    #     if type(msg) == ToolMessage:
+    #         if msg.name != "no_tool":
+    #             context = f"[{msg.content}] from {msg.name}, the next context provided is:{context}"
     
     system_prompt = \
         f"You are an expert on physcial health, a personal trainer and motivator! " \
@@ -684,28 +702,28 @@ def node_generate_answer(state: MessagesState):
         f"Use three sentences maximum and keep the answer concise.\n"\
         # f"Context: [{context}]"
 
-    system_context = f"Context: {context}"
+    # system_context = f"Context: {context}"
 
-    print("PROMPT", system_prompt)
-    print("\n\n", question, "\nCCCCCCC\n")
+    # print("PROMPT", system_prompt)
+    # print("\n\n", question, "\nCCCCCCC\n")
 
 
-    full_prompt = []
-    full_prompt.append({"role": "system", "content": system_prompt})
-    if context is not None: full_prompt.append({"role": "system", "content": system_context})
-    full_prompt.append({"role": "human", "content": question})
+    # full_prompt = []
+    # full_prompt.append({"role": "system", "content": system_prompt})
+    # if context is not None: full_prompt.append({"role": "system", "content": system_context})
+    # full_prompt.append({"role": "human", "content": question})
     
-    response = llm.invoke(full_prompt)
-
-    return {"messages": [response]}
-
-    # state["messages"].insert(0, SystemMessage(content=system_prompt))
-
-    # # print(state["messages"])
-
-    # response = llm.invoke(state["messages"])
+    # response = llm.invoke(full_prompt)
 
     # return {"messages": [response]}
+
+    state["messages"].insert(0, SystemMessage(content=system_prompt))
+
+    # print(state["messages"])
+
+    response = llm.invoke(state["messages"])
+
+    return {"messages": [response]}
 
 feedback_box_instructions = \
     f"Your task is to generate a short feedback message to a user about their physical activity. "\
@@ -733,7 +751,7 @@ def node_router_feedback_box(state: MessagesState):
     response = llm\
         .bind_tools([
             tool_no_tool, 
-            tool_retrieve_user_attributes, 
+            tool_retrieve_user_symptoms, 
             tool_retrieve_articles, 
             tool_retrieve_user_activity_quotient,
             tool_retrieve_feedback_box_examples,
@@ -818,7 +836,7 @@ def safe_tool_node_factory(tool):
 workflow = StateGraph(MessagesState)
 workflow.add_node("router", node_router)
 workflow.add_node("retrieve_articles", safe_tool_node_factory(tool_retrieve_articles))
-workflow.add_node("retrieve_user_attributes", safe_tool_node_factory(tool_retrieve_user_attributes))
+workflow.add_node("retrieve_user_symptoms", safe_tool_node_factory(tool_retrieve_user_symptoms))
 workflow.add_node("retrieve_user_activity_quotient", safe_tool_node_factory(tool_retrieve_user_activity_quotient))
 # workflow.add_node("retrieve_feedback_box_examples", safe_tool_node_factory(tool_retrieve_feedback_box_examples))
 workflow.add_node("search_web", safe_tool_node_factory(tool_search_web))
@@ -832,13 +850,13 @@ workflow.add_conditional_edges(
     {
         "no_tool": "generate_answer", 
         "retrieve_articles": "retrieve_articles", 
-        "retrieve_user_attributes": "retrieve_user_attributes",
+        "retrieve_user_symptoms": "retrieve_user_symptoms",
         "retrieve_user_activity_quotient": "retrieve_user_activity_quotient",
         "search_web": "search_web",
     }
 )
 workflow.add_edge("retrieve_articles", "generate_answer")
-workflow.add_edge("retrieve_user_attributes", "generate_answer")
+workflow.add_edge("retrieve_user_symptoms", "generate_answer")
 workflow.add_edge("retrieve_user_activity_quotient", "generate_answer")
 # workflow.add_edge("retrieve_feedback_box_examples", "generate_feedback_box")
 workflow.add_edge("search_web", "generate_answer")
@@ -851,7 +869,7 @@ agent_graph = workflow.compile()
 workflow = StateGraph(MessagesState)
 workflow.add_node("router_feedback_box", node_router_feedback_box)
 workflow.add_node("retrieve_articles", safe_tool_node_factory(tool_retrieve_articles))
-workflow.add_node("retrieve_user_attributes", safe_tool_node_factory(tool_retrieve_user_attributes))
+workflow.add_node("retrieve_user_symptoms", safe_tool_node_factory(tool_retrieve_user_symptoms))
 workflow.add_node("retrieve_user_activity_quotient", safe_tool_node_factory(tool_retrieve_user_activity_quotient))
 workflow.add_node("retrieve_feedback_box_examples", safe_tool_node_factory(tool_retrieve_feedback_box_examples))
 workflow.add_node("search_web", safe_tool_node_factory(tool_search_web))
@@ -864,14 +882,14 @@ workflow.add_conditional_edges(
     {
         "no_tool": "generate_feedback_box", 
         "retrieve_articles": "retrieve_articles", 
-        "retrieve_user_attributes": "retrieve_user_attributes",
+        "retrieve_user_symptoms": "retrieve_user_symptoms",
         "retrieve_user_activity_quotient": "retrieve_user_activity_quotient",
         "retrieve_feedback_box_examples": "retrieve_feedback_box_examples",
         "search_web": "search_web",
     }
 )
 workflow.add_edge("retrieve_articles", "generate_feedback_box")
-workflow.add_edge("retrieve_user_attributes", "generate_feedback_box")
+workflow.add_edge("retrieve_user_symptoms", "generate_feedback_box")
 workflow.add_edge("retrieve_user_activity_quotient", "generate_feedback_box")
 workflow.add_edge("retrieve_feedback_box_examples", "generate_feedback_box")
 workflow.add_edge("search_web", "generate_feedback_box")
