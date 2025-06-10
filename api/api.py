@@ -21,6 +21,8 @@ from langgraph.graph import StateGraph, START, END, Graph, MessagesState
 import asyncio
 from dotenv import load_dotenv
 
+import requests, os
+
 load_dotenv(dotenv_path=".env")
 
 app = FastAPI()
@@ -545,7 +547,6 @@ async def retrieve_articles(term: str) -> str:
     article_context = build_combined_article_context(combined_articles)
     return article_context
     
-
 async def retrieve_feedback_box_examples(term: str) -> str:
 
     db_response = await process_db_query_feedback_boxes(term)
@@ -563,18 +564,35 @@ async def retrieve_feedback_box_examples(term: str) -> str:
 
     return f"Here are examples of feedback messages, i.e. templates and not data about the user.\n\n {str(context)}"
 
+async def search_web(term: str) -> str:
+    
+    response = requests.post(
+        "https://api.tavily.com/search",
+        json={"query": term, "max_results": 2},
+        headers={"Authorization": os.getenv("TAVILY_KEY")}
+    )
+
+    data = response.json()
+    
+    # result = "\n\n".join([result["content"] for result in data.get("results")])
+    result = str([result["content"] for result in data.get("results")])
+
+    print("-----TAVILY SEARCH data: ", result)
+
+    return result
+
 
 tool_retrieve_user_attributes = Tool(
     name="retrieve_user_attributes",
     func=retrieve_user_symptoms,
-    description="Fetch attributes and symptoms about the user to use for additional context."
+    description="Fetch attributes and symptoms about the user to use for additional context and personalization."
 )
 
 tool_retrieve_articles = Tool(
     name="retrieve_articles",
     func=retrieve_articles,
     description=\
-        "Fetch chunks of text from published articles on physical health"
+        "Fetch chunks of text from a DB with published scientific articles on physical health"
         " to use for additional context. Always supply a search term for this tool. "
 )
 
@@ -591,6 +609,13 @@ tool_retrieve_feedback_box_examples = Tool(
         "Fetch a list of examples of how to properly write a feedback box message. "
         "The search term can help find examples closer related to a topic/tone/rule. "
         "Always call this tool if user mentions 'feedback'. "
+)
+
+tool_search_web = Tool(
+    name="search_web",
+    func= search_web,
+    description=\
+        "Search the web and internet for anything current. e.g. the weather."
 )
 
 tool_no_tool = Tool(
@@ -620,7 +645,8 @@ def node_router(state: MessagesState):
             tool_retrieve_user_attributes, 
             tool_retrieve_articles, 
             tool_retrieve_user_activity_quotient,
-            tool_retrieve_feedback_box_examples
+            tool_retrieve_feedback_box_examples,
+            tool_search_web
         ]).invoke(messages)
     
     print("\n\n *********************Router RESPONSE: \t", response, "\n\n")
@@ -691,7 +717,8 @@ def node_router_feedback_box(state: MessagesState):
             tool_retrieve_user_attributes, 
             tool_retrieve_articles, 
             tool_retrieve_user_activity_quotient,
-            tool_retrieve_feedback_box_examples
+            tool_retrieve_feedback_box_examples,
+            tool_search_web
         ]).invoke(messages)
     
     print("\n\n *********************Router_feedback_box RESPONSE: \t", response, "\n\n")
@@ -769,12 +796,14 @@ def safe_tool_node_factory(tool):
     return node
 
 
+# ____ general QA graph ____ #
 workflow = StateGraph(MessagesState)
 workflow.add_node("router", node_router)
 workflow.add_node("retrieve_articles", safe_tool_node_factory(tool_retrieve_articles))
 workflow.add_node("retrieve_user_attributes", safe_tool_node_factory(tool_retrieve_user_attributes))
 workflow.add_node("retrieve_user_activity_quotient", safe_tool_node_factory(tool_retrieve_user_activity_quotient))
 # workflow.add_node("retrieve_feedback_box_examples", safe_tool_node_factory(tool_retrieve_feedback_box_examples))
+workflow.add_node("search_web", safe_tool_node_factory(tool_search_web))
 workflow.add_node("generate_answer", node_generate_answer)
 # workflow.add_node("generate_feedback_box", node_generate_feedback_box)
 
@@ -787,23 +816,27 @@ workflow.add_conditional_edges(
         "retrieve_articles": "retrieve_articles", 
         "retrieve_user_attributes": "retrieve_user_attributes",
         "retrieve_user_activity_quotient": "retrieve_user_activity_quotient",
+        "search_web": "search_web",
     }
 )
 workflow.add_edge("retrieve_articles", "generate_answer")
 workflow.add_edge("retrieve_user_attributes", "generate_answer")
 workflow.add_edge("retrieve_user_activity_quotient", "generate_answer")
 # workflow.add_edge("retrieve_feedback_box_examples", "generate_feedback_box")
+workflow.add_edge("search_web", "generate_answer")
 workflow.add_edge("generate_answer", END)
 # workflow.add_edge("generate_feedback_box", END)
 
 agent_graph = workflow.compile()
 
+# ____ feedback_box graph ____ #
 workflow = StateGraph(MessagesState)
 workflow.add_node("router_feedback_box", node_router_feedback_box)
 workflow.add_node("retrieve_articles", safe_tool_node_factory(tool_retrieve_articles))
 workflow.add_node("retrieve_user_attributes", safe_tool_node_factory(tool_retrieve_user_attributes))
 workflow.add_node("retrieve_user_activity_quotient", safe_tool_node_factory(tool_retrieve_user_activity_quotient))
 workflow.add_node("retrieve_feedback_box_examples", safe_tool_node_factory(tool_retrieve_feedback_box_examples))
+workflow.add_node("search_web", safe_tool_node_factory(tool_search_web))
 workflow.add_node("generate_feedback_box", node_generate_feedback_box)
 
 workflow.add_edge(START, "router_feedback_box")
@@ -815,13 +848,15 @@ workflow.add_conditional_edges(
         "retrieve_articles": "retrieve_articles", 
         "retrieve_user_attributes": "retrieve_user_attributes",
         "retrieve_user_activity_quotient": "retrieve_user_activity_quotient",
-        "retrieve_feedback_box_examples": "retrieve_feedback_box_examples"
+        "retrieve_feedback_box_examples": "retrieve_feedback_box_examples",
+        "search_web": "search_web",
     }
 )
 workflow.add_edge("retrieve_articles", "generate_feedback_box")
 workflow.add_edge("retrieve_user_attributes", "generate_feedback_box")
 workflow.add_edge("retrieve_user_activity_quotient", "generate_feedback_box")
 workflow.add_edge("retrieve_feedback_box_examples", "generate_feedback_box")
+workflow.add_edge("search_web", "generate_feedback_box")
 workflow.add_edge("generate_feedback_box", END)
 
 agent_graph_feedback_box = workflow.compile()
