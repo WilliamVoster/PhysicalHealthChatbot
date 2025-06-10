@@ -106,8 +106,8 @@ async def process_llm_query(
 
     if user_aq is not None:
         content = \
-            f"An automated system found the user's current activity quotient (AQ): {user_aq}. \n" \
-            f"AQ stands for activity quotient, and is the successor to the PAI score (personal activity intelligence). " \
+            f"The user's activity quotient (AQ score) is currently: {user_aq}. \n" \
+            f"The metric is the successor to the PAI score (personal activity intelligence). " \
             f"It scores a persons physcial activity, where 100 points gives the maximum possible health benefits. "
 
         if user_aq_goal is not None:
@@ -545,9 +545,6 @@ async def retrieve_articles(term: str) -> str:
     article_context = build_combined_article_context(combined_articles)
     return article_context
     
-    return_object = await process_db_query_articles(term)
-    context = build_article_context(return_object)
-    return context
 
 async def retrieve_feedback_box_examples(term: str) -> str:
 
@@ -558,17 +555,13 @@ async def retrieve_feedback_box_examples(term: str) -> str:
     context = []
 
     for o in filtered_response["objects"]:
-        # o["properties"]["rule"]
-        # o["properties"]["tone_of_voice"]
-        # o["properties"]["message"]
-
         context.append(o.properties)
 
     # print("ASVASKDGAJVASDASDASV", str(context))
     # print("ASVASKDGAJVASDASDASV", filtered_response)
     # print("ASVASKDGAJVASDASDASV", db_response)
 
-    return str(context)
+    return f"Here are examples of feedback messages, i.e. templates and not data about the user.\n\n {str(context)}"
 
 
 tool_retrieve_user_attributes = Tool(
@@ -677,6 +670,34 @@ feedback_box_instructions = \
     f"Respond with a maximum of 2 sentences. "\
     f"Respond only with the feedback message and nothing else. "\
 
+def node_router_feedback_box(state: MessagesState):
+
+    messages = [SystemMessage(content=
+        "You are an assistant with access to tools. "
+        # "Only call a tool if it's necessary to answer the user's question. "
+        "Call all the tools you think you would need to answer the user's question. "
+        # "If multiple tools seem relevant, call them one at a time in separate turns, based on available context. "
+        # "e.g. you might need the output of one to query the other. "
+        # "You must always use at least one too, even though you might want to answer directly - instead call the 'no_tool' tool"
+        # "If it's a simple / general question not related to physical health, just respond directly."
+        f"{feedback_box_instructions}"
+    )] + state["messages"]
+
+    print("\n\n ********************Router_feedback_box MESSAGES: \t", messages, "\n\n")
+
+    response = llm\
+        .bind_tools([
+            tool_no_tool, 
+            tool_retrieve_user_attributes, 
+            tool_retrieve_articles, 
+            tool_retrieve_user_activity_quotient,
+            tool_retrieve_feedback_box_examples
+        ]).invoke(messages)
+    
+    print("\n\n *********************Router_feedback_box RESPONSE: \t", response, "\n\n")
+    
+    return {"messages": state["messages"] + [response]}
+
 def node_generate_feedback_box(state: MessagesState):
 
     state["messages"].insert(0, SystemMessage(content=feedback_box_instructions))
@@ -753,9 +774,9 @@ workflow.add_node("router", node_router)
 workflow.add_node("retrieve_articles", safe_tool_node_factory(tool_retrieve_articles))
 workflow.add_node("retrieve_user_attributes", safe_tool_node_factory(tool_retrieve_user_attributes))
 workflow.add_node("retrieve_user_activity_quotient", safe_tool_node_factory(tool_retrieve_user_activity_quotient))
-workflow.add_node("retrieve_feedback_box_examples", safe_tool_node_factory(tool_retrieve_feedback_box_examples))
+# workflow.add_node("retrieve_feedback_box_examples", safe_tool_node_factory(tool_retrieve_feedback_box_examples))
 workflow.add_node("generate_answer", node_generate_answer)
-workflow.add_node("generate_feedback_box", node_generate_feedback_box)
+# workflow.add_node("generate_feedback_box", node_generate_feedback_box)
 
 workflow.add_edge(START, "router")
 workflow.add_conditional_edges(
@@ -772,12 +793,39 @@ workflow.add_conditional_edges(
 workflow.add_edge("retrieve_articles", "generate_answer")
 workflow.add_edge("retrieve_user_attributes", "generate_answer")
 workflow.add_edge("retrieve_user_activity_quotient", "generate_answer")
-workflow.add_edge("retrieve_feedback_box_examples", "generate_feedback_box")
+# workflow.add_edge("retrieve_feedback_box_examples", "generate_feedback_box")
 workflow.add_edge("generate_answer", END)
-workflow.add_edge("generate_feedback_box", END)
+# workflow.add_edge("generate_feedback_box", END)
 
 agent_graph = workflow.compile()
 
+workflow = StateGraph(MessagesState)
+workflow.add_node("router_feedback_box", node_router_feedback_box)
+workflow.add_node("retrieve_articles", safe_tool_node_factory(tool_retrieve_articles))
+workflow.add_node("retrieve_user_attributes", safe_tool_node_factory(tool_retrieve_user_attributes))
+workflow.add_node("retrieve_user_activity_quotient", safe_tool_node_factory(tool_retrieve_user_activity_quotient))
+workflow.add_node("retrieve_feedback_box_examples", safe_tool_node_factory(tool_retrieve_feedback_box_examples))
+workflow.add_node("generate_feedback_box", node_generate_feedback_box)
+
+workflow.add_edge(START, "router_feedback_box")
+workflow.add_conditional_edges(
+    "router",
+    router_select_tool,
+    {
+        "no_tool": "generate_feedback_box", 
+        "retrieve_articles": "retrieve_articles", 
+        "retrieve_user_attributes": "retrieve_user_attributes",
+        "retrieve_user_activity_quotient": "retrieve_user_activity_quotient",
+        "retrieve_feedback_box_examples": "retrieve_feedback_box_examples"
+    }
+)
+workflow.add_edge("retrieve_articles", "generate_feedback_box")
+workflow.add_edge("retrieve_user_attributes", "generate_feedback_box")
+workflow.add_edge("retrieve_user_activity_quotient", "generate_feedback_box")
+workflow.add_edge("retrieve_feedback_box_examples", "generate_feedback_box")
+workflow.add_edge("generate_feedback_box", END)
+
+agent_graph_feedback_box = workflow.compile()
 
 
 # Program version: 1 (MVP)
@@ -909,7 +957,32 @@ async def query_agent(request: Request):
     )
 
     messages = await agent_graph.ainvoke({"messages": [{
-        "role": "user",
+        "role": "human",
+        "content": user_query,
+    }]})
+
+    final_response = messages["messages"][-1]
+    final_response.pretty_print()
+
+    return process_llm_query_from_messages(messages["messages"])
+
+
+# Variant of Program version: 3 (agentified), used to generate feedback box messages
+@app.post("/api/query_agent_feedback_box")
+async def query_agent_feedback_box(request: Request):
+
+    data = await request.json()
+
+    user_query = data["query"]
+
+    print(
+        "\n##################################################################\n\n",
+        agent_graph_feedback_box.get_graph().draw_mermaid(), 
+        "\n\n##################################################################\n"
+    )
+
+    messages = await agent_graph_feedback_box.ainvoke({"messages": [{
+        "role": "human",
         "content": user_query,
     }]})
 

@@ -42,8 +42,6 @@ def chat_input():
             submit_button = st.form_submit_button(label="Submit", on_click=clear_input)
 
     if submit_button:
-        # st.write(f"input: {st.session_state.user_input}")
-        # st.write(f"internal: {st.session_state.user_input_internal}")
 
         data = {
             "query": st.session_state.user_input_internal, 
@@ -64,11 +62,8 @@ def chat_input():
 
 def items_show():
     
-
     fetch_response = requests.get("http://api:8000/api/get_all")
     fetch_response_data = fetch_response.json()
-
-    st.write(fetch_response_data)
 
     cols = st.columns([1, 1, 1, 2])
     cols[0].markdown("**Symptom**")
@@ -76,7 +71,6 @@ def items_show():
     cols[2].markdown("**Recency specified**")
     cols[3].markdown("**Delete**")
     
-
     for item in fetch_response_data["message"]:
 
         st.markdown("<hr style='margin: 0;'>", unsafe_allow_html=True)
@@ -94,13 +88,22 @@ def items_show():
             delete_response_data = delete_response.json()
 
             st.write(delete_response_data)
+    
+    st.write(fetch_response_data)
             
 
 def select_system():
     selected_option = st.selectbox(
         "Select an endpoint:",
         # ["v1-only_AQ_context", "v2-user+article_context", "v3-agentified"]
-        ["/api/query", "/api/query_with_context", "/api/query_agent"]
+        [
+            "/api/query", 
+            "/api/query_feedback_box",
+            "/api/query_with_context", 
+            "/api/query_with_context_feedback_box",
+            "/api/query_agent",
+            "/api/query_agent_feedback_box",
+        ]
     )
 
     st.session_state["endpoint"] = "http://api:8000" + selected_option
