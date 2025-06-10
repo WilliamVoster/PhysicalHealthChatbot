@@ -787,7 +787,6 @@ workflow.add_conditional_edges(
         "retrieve_articles": "retrieve_articles", 
         "retrieve_user_attributes": "retrieve_user_attributes",
         "retrieve_user_activity_quotient": "retrieve_user_activity_quotient",
-        "retrieve_feedback_box_examples": "retrieve_feedback_box_examples"
     }
 )
 workflow.add_edge("retrieve_articles", "generate_answer")
